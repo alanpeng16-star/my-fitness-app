@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>互動式每日餐點與宏量營養素計算機</title>
-    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入 Google Fonts: Inter 與 Noto Sans TC -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -16,9 +14,9 @@
                         sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
                     },
                     colors: {
-                        protein: '#3b82f6', // Blue-500
-                        fat: '#f59e0b',     // Amber-500
-                        carbs: '#10b981',   // Emerald-500
+                        protein: '#3b82f6',
+                        fat: '#f59e0b',
+                        carbs: '#10b981',
                     }
                 }
             }
@@ -30,35 +28,17 @@
             background-color: #f8fafc;
             color: #0f172a;
         }
-        /* 自訂捲軸樣式 */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-        /* 隱藏數字輸入框的上下箭頭 */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { 
-            opacity: 1;
-        }
-        .donut-transition {
-            transition: background 0.5s ease-out;
-        }
+        input[type=number]::-webkit-outer-spin-button { opacity: 1; }
+        .donut-transition { transition: background 0.5s ease-out; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- 頂部導覽列 -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -74,7 +54,7 @@
             </div>
 
             <div class="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
-                <button onclick="openCloudSyncModal()" id="cloudSyncNavBtn" class="px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition flex items-center gap-1.5 border border-emerald-200/90 shadow-2xs" title="設定手機與電腦雲端即時同步">
+                <button onclick="openCloudSyncModal()" id="cloudSyncNavBtn" class="px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition flex items-center gap-1.5 border border-emerald-200/90 shadow-2xs">
                     <span id="cloudSyncStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
@@ -99,10 +79,8 @@
         </div>
     </header>
 
-    <!-- 主要內容區 -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5 space-y-5 sm:space-y-6">
 
-        <!-- 第一區：Apple Watch 極簡消耗與熱量缺口儀表板 -->
         <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-6">
             <div class="flex items-center gap-3 pb-3 sm:pb-4 border-b border-slate-100 mb-4 sm:mb-5">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-orange-500 flex items-center justify-center text-white shadow-sm shadow-rose-500/20 shrink-0">
@@ -117,7 +95,6 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-start">
-                <!-- 左欄：Apple Watch 能量輸入 -->
                 <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-2">
                         <span class="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5">
@@ -128,38 +105,27 @@
                             <button type="button" onclick="document.getElementById('awScreenshotInput').click()" id="awScreenshotBtn" class="px-2.5 py-1.5 text-[11px] font-bold bg-rose-600 hover:bg-rose-700 text-white rounded-lg shadow-2xs transition flex items-center gap-1">
                                 <span>📸 AI 截圖辨識</span>
                             </button>
-                            <button type="button" onclick="openIosShortcutModal()" class="px-2 py-1.5 text-[11px] font-bold bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg transition flex items-center gap-1">
-                                <span>⚡ iOS 捷徑</span>
-                            </button>
                             <input type="file" id="awScreenshotInput" accept="image/*" class="hidden" onchange="handleAwScreenshotUpload(event)">
                         </div>
                     </div>
 
-                    <!-- AI 截圖辨識狀態提示列 -->
                     <div id="awAiStatusBox" class="hidden p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="inline-block w-4 h-4 border-2 border-rose-600 border-t-transparent rounded-full animate-spin"></span>
-                            <span id="awAiStatusText" class="font-semibold text-[11px]">AI 正在讀取您的 Apple Watch 截圖數據...</span>
+                            <span class="font-semibold text-[11px]">AI 正在讀取您的 Apple Watch 截圖數據...</span>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                        <!-- 基礎代謝 (BMR) -->
                         <div class="bg-white p-3 sm:p-3.5 rounded-xl border border-slate-200/80">
-                            <label for="awRestingInput" class="block text-[11px] sm:text-xs font-bold text-slate-500 mb-1.5">
-                                基礎代謝 / 靜息能量
-                            </label>
+                            <label for="awRestingInput" class="block text-[11px] sm:text-xs font-bold text-slate-500 mb-1.5">基礎代謝 / 靜息能量</label>
                             <div class="flex items-baseline gap-1">
                                 <input type="number" id="awRestingInput" min="800" max="4000" step="10" value="1480" oninput="handleAwEnergyChange()" class="w-full text-lg sm:text-xl font-extrabold text-slate-800 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500">
                                 <span class="text-xs text-slate-400 font-semibold">kcal</span>
                             </div>
                         </div>
-
-                        <!-- 日常活動能量 (Active Energy 紅圈) -->
                         <div class="bg-white p-3 sm:p-3.5 rounded-xl border border-rose-200/80 shadow-sm shadow-rose-100">
-                            <label for="awActiveBaseInput" class="block text-[11px] sm:text-xs font-bold text-rose-600 mb-1.5">
-                                活動能量 (Apple Watch 紅圈)
-                            </label>
+                            <label for="awActiveBaseInput" class="block text-[11px] sm:text-xs font-bold text-rose-600 mb-1.5">活動能量 (紅圈)</label>
                             <div class="flex items-baseline gap-1">
                                 <input type="number" id="awActiveBaseInput" min="0" max="4000" step="10" value="350" oninput="handleAwEnergyChange()" class="w-full text-lg sm:text-xl font-extrabold text-rose-600 bg-rose-50/40 border border-rose-200 rounded-lg px-2.5 py-1.5 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500">
                                 <span class="text-xs text-rose-400 font-semibold">kcal</span>
@@ -168,33 +134,17 @@
                     </div>
                 </div>
 
-                <!-- 右欄：熱量缺口 (Calorie Deficit) 視覺化分析卡 -->
                 <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-5 shadow-md flex flex-col justify-between h-full min-h-[180px]">
                     <div>
                         <div class="flex items-center justify-between mb-3.5">
                             <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">當日收支與缺口結算</span>
-                            <span id="deficitStatusPill" class="px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                                達標減脂區間
-                            </span>
+                            <span id="deficitStatusPill" class="px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">達標減脂區間</span>
                         </div>
-
-                        <!-- 公式拆解：總消耗 - 總攝取 = 缺口 -->
                         <div class="grid grid-cols-3 gap-2 bg-slate-800/90 rounded-xl p-3 border border-slate-700 mb-4 text-center">
-                            <div>
-                                <span class="text-[10px] sm:text-[11px] text-slate-400 block mb-0.5">總消耗 TDEE</span>
-                                <span id="cardTdeeValue" class="text-base sm:text-lg font-extrabold text-rose-400">0</span>
-                            </div>
-                            <div class="border-x border-slate-700">
-                                <span class="text-[10px] sm:text-[11px] text-slate-400 block mb-0.5">飲食總攝取</span>
-                                <span id="cardIntakeValue" class="text-base sm:text-lg font-extrabold text-emerald-400">0</span>
-                            </div>
-                            <div>
-                                <span id="cardNetLabel" class="text-[10px] sm:text-[11px] text-slate-300 font-semibold block mb-0.5">熱量缺口</span>
-                                <span id="cardDeficitValue" class="text-lg sm:text-xl font-black text-amber-300">0</span>
-                            </div>
+                            <div><span class="text-[10px] sm:text-[11px] text-slate-400 block mb-0.5">總消耗 TDEE</span><span id="cardTdeeValue" class="text-base sm:text-lg font-extrabold text-rose-400">0</span></div>
+                            <div class="border-x border-slate-700"><span class="text-[10px] sm:text-[11px] text-slate-400 block mb-0.5">飲食總攝取</span><span id="cardIntakeValue" class="text-base sm:text-lg font-extrabold text-emerald-400">0</span></div>
+                            <div><span id="cardNetLabel" class="text-[10px] sm:text-[11px] text-slate-300 font-semibold block mb-0.5">熱量缺口</span><span id="cardDeficitValue" class="text-lg sm:text-xl font-black text-amber-300">0</span></div>
                         </div>
-
-                        <!-- 缺口目標進度條 -->
                         <div class="space-y-1.5">
                             <div class="flex justify-between text-[11px] sm:text-xs">
                                 <span class="text-slate-300">距離目標缺口 (<strong id="targetDeficitText" class="text-white">400</strong> kcal)</span>
@@ -209,23 +159,12 @@
             </div>
         </section>
 
-        <!-- 第二區：視覺化總計儀表板 (營養素與水份) -->
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
-            
-            <!-- 左側：熱量與宏量營養素進度條 (佔 7 欄) -->
             <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-6 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2">
-                            <span class="w-2 h-5 bg-emerald-500 rounded-full"></span>
-                            當日營養攝取進度
-                        </h2>
-                        <span id="calorieStatusBadge" class="px-2 sm:px-2.5 py-1 text-[10px] sm:text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700">
-                            計算中...
-                        </span>
+                        <h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2"><span class="w-2 h-5 bg-emerald-500 rounded-full"></span>當日營養攝取進度</h2>
                     </div>
-
-                    <!-- 總熱量大型進度卡 -->
                     <div class="bg-slate-50 rounded-2xl p-3 sm:p-4 border border-slate-100 mb-4 sm:mb-5">
                         <div class="flex justify-between items-baseline mb-2">
                             <div>
@@ -243,471 +182,207 @@
                         <div class="w-full h-2.5 sm:h-3 bg-slate-200 rounded-full overflow-hidden mb-3">
                             <div id="kcalProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
-
-                        <!-- 即時熱量缺口迷你總覽列 -->
                         <div class="pt-2 sm:pt-2.5 border-t border-slate-200/80 grid grid-cols-3 gap-1.5 sm:gap-2 text-center">
-                            <div class="bg-white rounded-lg sm:rounded-xl p-1.5 sm:p-2 border border-slate-200/60">
-                                <span class="text-[9px] sm:text-[10px] text-slate-400 font-semibold block truncate">⌚ 當日 TDEE</span>
-                                <span id="miniTdeeDisplay" class="text-xs sm:text-sm font-extrabold text-rose-600">0</span>
-                            </div>
-                            <div class="bg-white rounded-lg sm:rounded-xl p-1.5 sm:p-2 border border-slate-200/60">
-                                <span id="miniDeficitLabel" class="text-[9px] sm:text-[10px] text-slate-400 font-semibold block truncate">🔥 熱量缺口</span>
-                                <span id="miniDeficitDisplay" class="text-xs sm:text-sm font-extrabold text-emerald-600">0</span>
-                            </div>
-                            <div class="bg-white rounded-lg sm:rounded-xl p-1.5 sm:p-2 border border-slate-200/60">
-                                <span class="text-[9px] sm:text-[10px] text-slate-400 font-semibold block truncate">🎯 目標缺口</span>
-                                <span id="miniTargetDeficitDisplay" class="text-xs sm:text-sm font-extrabold text-slate-700">0</span>
-                            </div>
+                            <div class="bg-white rounded-lg sm:rounded-xl p-1.5 sm:p-2 border border-slate-200/60"><span class="text-[9px] sm:text-[10px] text-slate-400 font-semibold block truncate">⌚ 當日 TDEE</span><span id="miniTdeeDisplay" class="text-xs sm:text-sm font-extrabold text-rose-600">0</span></div>
+                            <div class="bg-white rounded-lg sm:rounded-xl p-1.5 sm:p-2 border border-slate-200/60"><span id="miniDeficitLabel" class="text-[9px] sm:text-[10px] text-slate-400 font-semibold block truncate">🔥 熱量缺口</span><span id="miniDeficitDisplay" class="text-xs sm:text-sm font-extrabold text-emerald-600">0</span></div>
+                            <div class="bg-white rounded-lg sm:rounded-xl p-1.5 sm:p-2 border border-slate-200/60"><span class="text-[9px] sm:text-[10px] text-slate-400 font-semibold block truncate">🎯 目標缺口</span><span id="miniTargetDeficitDisplay" class="text-xs sm:text-sm font-extrabold text-slate-700">0</span></div>
                         </div>
                     </div>
 
-                    <!-- 三大宏量營養素 (P, F, C) 進度網格 -->
                     <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-5">
-                        <!-- 蛋白質 Protein -->
                         <div class="p-2 sm:p-3.5 rounded-xl border border-blue-100 bg-blue-50/30">
                             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1">
-                                <span class="text-[10px] sm:text-xs font-bold text-blue-700 flex items-center gap-1">
-                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-500"></span>蛋白質(P)
-                                </span>
+                                <span class="text-[10px] sm:text-xs font-bold text-blue-700 flex items-center gap-1"><span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-500"></span>蛋白質(P)</span>
                                 <span id="pPercentTarget" class="text-[9px] sm:text-xs font-semibold text-blue-600 mt-0.5 sm:mt-0">0%</span>
                             </div>
-                            <div class="flex items-baseline gap-0.5 sm:gap-1 my-1">
-                                <span id="totalPDisplay" class="text-base sm:text-xl font-bold text-slate-800">0</span>
-                                <span class="text-[9px] sm:text-xs text-slate-500">/ <span id="targetPDisplay">140</span>g</span>
-                            </div>
-                            <div class="w-full h-1.5 sm:h-2 bg-blue-100 rounded-full overflow-hidden">
-                                <div id="pProgressBar" class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                            </div>
+                            <div class="flex items-baseline gap-0.5 sm:gap-1 my-1"><span id="totalPDisplay" class="text-base sm:text-xl font-bold text-slate-800">0</span><span class="text-[9px] sm:text-xs text-slate-500">/ <span id="targetPDisplay">140</span>g</span></div>
+                            <div class="w-full h-1.5 sm:h-2 bg-blue-100 rounded-full overflow-hidden"><div id="pProgressBar" class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                         </div>
-
-                        <!-- 脂肪 Fat -->
                         <div class="p-2 sm:p-3.5 rounded-xl border border-amber-100 bg-amber-50/30">
                             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1">
-                                <span class="text-[10px] sm:text-xs font-bold text-amber-700 flex items-center gap-1">
-                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500"></span>脂肪(F)
-                                </span>
+                                <span class="text-[10px] sm:text-xs font-bold text-amber-700 flex items-center gap-1"><span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500"></span>脂肪(F)</span>
                                 <span id="fPercentTarget" class="text-[9px] sm:text-xs font-semibold text-amber-600 mt-0.5 sm:mt-0">0%</span>
                             </div>
-                            <div class="flex items-baseline gap-0.5 sm:gap-1 my-1">
-                                <span id="totalFDisplay" class="text-base sm:text-xl font-bold text-slate-800">0</span>
-                                <span class="text-[9px] sm:text-xs text-slate-500">/ <span id="targetFDisplay">65</span>g</span>
-                            </div>
-                            <div class="w-full h-1.5 sm:h-2 bg-amber-100 rounded-full overflow-hidden">
-                                <div id="fProgressBar" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                            </div>
+                            <div class="flex items-baseline gap-0.5 sm:gap-1 my-1"><span id="totalFDisplay" class="text-base sm:text-xl font-bold text-slate-800">0</span><span class="text-[9px] sm:text-xs text-slate-500">/ <span id="targetFDisplay">65</span>g</span></div>
+                            <div class="w-full h-1.5 sm:h-2 bg-amber-100 rounded-full overflow-hidden"><div id="fProgressBar" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                         </div>
-
-                        <!-- 碳水化合物 Carbs -->
                         <div class="p-2 sm:p-3.5 rounded-xl border border-emerald-100 bg-emerald-50/30">
                             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1">
-                                <span class="text-[10px] sm:text-xs font-bold text-emerald-700 flex items-center gap-1">
-                                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500"></span>碳水(C)
-                                </span>
+                                <span class="text-[10px] sm:text-xs font-bold text-emerald-700 flex items-center gap-1"><span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500"></span>碳水(C)</span>
                                 <span id="cPercentTarget" class="text-[9px] sm:text-xs font-semibold text-emerald-600 mt-0.5 sm:mt-0">0%</span>
                             </div>
-                            <div class="flex items-baseline gap-0.5 sm:gap-1 my-1">
-                                <span id="totalCDisplay" class="text-base sm:text-xl font-bold text-slate-800">0</span>
-                                <span class="text-[9px] sm:text-xs text-slate-500">/ <span id="targetCDisplay">210</span>g</span>
-                            </div>
-                            <div class="w-full h-1.5 sm:h-2 bg-emerald-100 rounded-full overflow-hidden">
-                                <div id="cProgressBar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                            </div>
+                            <div class="flex items-baseline gap-0.5 sm:gap-1 my-1"><span id="totalCDisplay" class="text-base sm:text-xl font-bold text-slate-800">0</span><span class="text-[9px] sm:text-xs text-slate-500">/ <span id="targetCDisplay">210</span>g</span></div>
+                            <div class="w-full h-1.5 sm:h-2 bg-emerald-100 rounded-full overflow-hidden"><div id="cProgressBar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- 電解質微營養素 (鈉、鉀) 進度列 -->
                 <div class="grid grid-cols-2 gap-3 sm:gap-4 pt-3 border-t border-slate-100">
-                    <!-- 鈉 Sodium -->
                     <div>
-                        <div class="flex justify-between text-[10px] sm:text-xs mb-1.5">
-                            <span class="font-semibold text-slate-600">鈉 (Na)</span>
-                            <span class="font-bold text-slate-800"><span id="totalNaDisplay">0</span> <span class="text-slate-400 font-normal">/ <span id="targetNaDisplay">2300</span></span></span>
-                        </div>
-                        <div class="w-full h-1.5 sm:h-2 bg-slate-100 rounded-full overflow-hidden">
-                            <div id="naProgressBar" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                        </div>
+                        <div class="flex justify-between text-[10px] sm:text-xs mb-1.5"><span class="font-semibold text-slate-600">鈉 (Na)</span><span class="font-bold text-slate-800"><span id="totalNaDisplay">0</span> <span class="text-slate-400 font-normal">/ <span id="targetNaDisplay">2300</span></span></span></div>
+                        <div class="w-full h-1.5 sm:h-2 bg-slate-100 rounded-full overflow-hidden"><div id="naProgressBar" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                     </div>
-
-                    <!-- 鉀 Potassium -->
                     <div>
-                        <div class="flex justify-between text-[10px] sm:text-xs mb-1.5">
-                            <span class="font-semibold text-slate-600">鉀 (K)</span>
-                            <span class="font-bold text-slate-800"><span id="totalKDisplay">0</span> <span class="text-slate-400 font-normal">/ <span id="targetKDisplay">3500</span></span></span>
-                        </div>
-                        <div class="w-full h-1.5 sm:h-2 bg-slate-100 rounded-full overflow-hidden">
-                            <div id="kProgressBar" class="h-full bg-purple-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                        </div>
+                        <div class="flex justify-between text-[10px] sm:text-xs mb-1.5"><span class="font-semibold text-slate-600">鉀 (K)</span><span class="font-bold text-slate-800"><span id="totalKDisplay">0</span> <span class="text-slate-400 font-normal">/ <span id="targetKDisplay">3500</span></span></span></div>
+                        <div class="w-full h-1.5 sm:h-2 bg-slate-100 rounded-full overflow-hidden"><div id="kProgressBar" class="h-full bg-purple-500 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 右側：PFC 圓餅圖、鈉鉀比與水份 (佔 5 欄) -->
             <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-5">
-                <!-- PFC 圓餅圖與比例 -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-5">
-                    <div class="flex items-center justify-between mb-3 sm:mb-4">
-                        <h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2">
-                            <span class="w-2 h-5 bg-blue-500 rounded-full"></span>
-                            PFC 熱量佔比
-                        </h2>
-                        <span class="text-[10px] text-slate-400">P:4 / F:9 / C:4 kcal</span>
-                    </div>
-
+                    <div class="flex items-center justify-between mb-3 sm:mb-4"><h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2"><span class="w-2 h-5 bg-blue-500 rounded-full"></span>PFC 熱量佔比</h2><span class="text-[10px] text-slate-400">P:4 / F:9 / C:4 kcal</span></div>
                     <div class="flex items-center justify-around gap-4 my-2">
-                        <!-- 動態 Conic-Gradient 甜甜圈圖 -->
                         <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center shadow-inner donut-transition shrink-0" id="pfcDonutChart" style="background: conic-gradient(#e2e8f0 0% 100%);">
                             <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex flex-col items-center justify-center shadow-sm">
-                                <span id="pfcCalculatedKcal" class="text-sm sm:text-base font-extrabold text-slate-800">0</span>
-                                <span class="text-[9px] sm:text-[10px] text-slate-400">kcal</span>
+                                <span id="pfcCalculatedKcal" class="text-sm sm:text-base font-extrabold text-slate-800">0</span><span class="text-[9px] sm:text-[10px] text-slate-400">kcal</span>
                             </div>
                         </div>
-
-                        <!-- 詳細比例列表 -->
                         <div class="w-full max-w-[140px] space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-[10px] sm:text-xs font-semibold text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-blue-500"></span>蛋白質</span>
-                                <span id="pfcRatioP" class="text-[11px] sm:text-sm font-bold text-blue-600">0%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-[10px] sm:text-xs font-semibold text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-amber-500"></span>脂肪</span>
-                                <span id="pfcRatioF" class="text-[11px] sm:text-sm font-bold text-amber-600">0%</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-[10px] sm:text-xs font-semibold text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></span>碳水</span>
-                                <span id="pfcRatioC" class="text-[11px] sm:text-sm font-bold text-emerald-600">0%</span>
-                            </div>
+                            <div class="flex items-center justify-between"><span class="text-[10px] sm:text-xs font-semibold text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-blue-500"></span>蛋白質</span><span id="pfcRatioP" class="text-[11px] sm:text-sm font-bold text-blue-600">0%</span></div>
+                            <div class="flex items-center justify-between"><span class="text-[10px] sm:text-xs font-semibold text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-amber-500"></span>脂肪</span><span id="pfcRatioF" class="text-[11px] sm:text-sm font-bold text-amber-600">0%</span></div>
+                            <div class="flex items-center justify-between"><span class="text-[10px] sm:text-xs font-semibold text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></span>碳水</span><span id="pfcRatioC" class="text-[11px] sm:text-sm font-bold text-emerald-600">0%</span></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 鈉鉀比 (Na/K Ratio) 指標卡片 -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-5">
-                    <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                            </svg>
-                            鈉鉀比 (Na / K)
-                        </span>
-                        <span id="naKBadge" class="px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-md bg-slate-200 text-slate-600">
-                            尚未攝取
-                        </span>
-                    </div>
-                    <div class="flex items-baseline justify-between">
-                        <div>
-                            <span id="naKValue" class="text-xl sm:text-2xl font-extrabold text-slate-900">0.00</span>
-                            <span class="text-[10px] sm:text-xs text-slate-500 ml-1">理想 &lt; 1.0</span>
-                        </div>
-                    </div>
+                    <div class="flex items-center justify-between mb-1.5"><span class="text-xs font-bold text-slate-700">鈉鉀比 (Na / K)</span><span id="naKBadge" class="px-2 py-0.5 text-[10px] sm:text-[11px] font-bold rounded-md bg-slate-200 text-slate-600">尚未攝取</span></div>
+                    <div class="flex items-baseline justify-between"><div><span id="naKValue" class="text-xl sm:text-2xl font-extrabold text-slate-900">0.00</span><span class="text-[10px] sm:text-xs text-slate-500 ml-1">理想 &lt; 1.0</span></div></div>
                 </div>
 
-                <!-- 純水攝取紀錄 (Water Intake Tracker) -->
                 <div class="bg-sky-50/70 rounded-2xl shadow-sm border border-sky-200/70 p-4 sm:p-5">
                     <div class="flex items-center justify-between mb-2 sm:mb-3">
-                        <span class="text-xs font-bold text-sky-900 flex items-center gap-1.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
-                            每日純水攝取
-                        </span>
-                        <span class="text-[11px] sm:text-xs font-bold text-sky-700">
-                            <span id="currentWaterDisplay">0</span> / <span id="targetWaterDisplay">2500</span> ml (<span id="waterPctDisplay">0%</span>)
-                        </span>
+                        <span class="text-xs font-bold text-sky-900">每日純水攝取</span>
+                        <span class="text-[11px] sm:text-xs font-bold text-sky-700"><span id="currentWaterDisplay">0</span> / <span id="targetWaterDisplay">2500</span> ml (<span id="waterPctDisplay">0%</span>)</span>
                     </div>
-                    <div class="w-full h-2 sm:h-2.5 bg-sky-100 rounded-full overflow-hidden mb-3">
-                        <div id="waterProgressBar" class="h-full bg-gradient-to-r from-sky-400 to-blue-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                    </div>
+                    <div class="w-full h-2 sm:h-2.5 bg-sky-100 rounded-full overflow-hidden mb-3"><div id="waterProgressBar" class="h-full bg-gradient-to-r from-sky-400 to-blue-500 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                     <div class="flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
                         <div class="flex flex-wrap items-center gap-1.5">
-                            <button type="button" onclick="adjustWater(250)" class="px-2 sm:px-2.5 py-1 text-[10px] sm:text-xs font-semibold bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-lg transition shadow-2xs">+250ml</button>
-                            <button type="button" onclick="adjustWater(500)" class="px-2 sm:px-2.5 py-1 text-[10px] sm:text-xs font-semibold bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-lg transition shadow-2xs">+500ml</button>
-                            <button type="button" onclick="adjustWater(-250)" class="px-1.5 sm:px-2 py-1 text-[10px] sm:text-xs font-semibold bg-white hover:bg-slate-100 text-slate-500 border border-slate-200 rounded-lg transition">-250</button>
+                            <button type="button" onclick="adjustWater(250)" class="px-2 sm:px-2.5 py-1 text-[10px] sm:text-xs font-semibold bg-white text-sky-700 border border-sky-200 rounded-lg shadow-2xs">+250ml</button>
+                            <button type="button" onclick="adjustWater(500)" class="px-2 sm:px-2.5 py-1 text-[10px] sm:text-xs font-semibold bg-white text-sky-700 border border-sky-200 rounded-lg shadow-2xs">+500ml</button>
+                            <button type="button" onclick="adjustWater(-250)" class="px-1.5 sm:px-2 py-1 text-[10px] sm:text-xs font-semibold bg-white text-slate-500 border border-slate-200 rounded-lg">-250</button>
                         </div>
-                        <button type="button" onclick="resetWater()" class="text-[10px] sm:text-[11px] text-slate-400 hover:text-slate-600 underline">歸零</button>
+                        <button type="button" onclick="resetWater()" class="text-[10px] sm:text-[11px] text-slate-400 underline">歸零</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 第三區：新增餐點與詳細餐點分析表格 -->
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
-            
-            <!-- 左側：新增餐點與相片 AI 記錄區 (佔 4 欄) -->
             <div class="lg:col-span-4 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2">
-                        <span class="w-2 h-5 bg-teal-500 rounded-full"></span>
-                        記錄今日餐食
-                    </h2>
-                    <!-- 模式切換 Tabs -->
+                    <h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2"><span class="w-2 h-5 bg-teal-500 rounded-full"></span>記錄今日餐食</h2>
                     <div class="inline-flex p-1 bg-slate-100 rounded-xl text-[10px] sm:text-xs font-bold">
-                        <button type="button" id="tabBtnPhoto" onclick="switchInputMode('photo')" class="px-2 py-1.5 sm:px-2.5 rounded-lg bg-white text-emerald-700 shadow-xs transition flex items-center gap-1">
-                            <span>📸 AI 記錄</span>
-                        </button>
-                        <button type="button" id="tabBtnManual" onclick="switchInputMode('manual')" class="px-2 py-1.5 sm:px-2.5 rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center gap-1">
-                            <span>✍️ 手動輸入</span>
-                        </button>
+                        <button type="button" id="tabBtnPhoto" onclick="switchInputMode('photo')" class="px-2 py-1.5 sm:px-2.5 rounded-lg bg-white text-emerald-700 shadow-xs transition flex items-center gap-1"><span>📸 AI 記錄</span></button>
+                        <button type="button" id="tabBtnManual" onclick="switchInputMode('manual')" class="px-2 py-1.5 sm:px-2.5 rounded-lg text-slate-600 transition flex items-center gap-1"><span>✍️ 預設庫 / 手動</span></button>
                     </div>
                 </div>
 
-                <!-- 共用：餐別選擇與相片上傳器 -->
                 <div class="mb-4 space-y-3">
                     <div class="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-xl border border-slate-200/80">
                         <label for="mealType" class="text-xs font-bold text-slate-700">記錄餐別：</label>
-                        <select id="mealType" class="text-xs sm:text-sm font-semibold bg-white border border-slate-200 rounded-lg px-2 py-1 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <option value="早餐">🌅 早餐</option>
-                            <option value="午餐">☀️ 午餐</option>
-                            <option value="晚餐">🌙 晚餐</option>
-                            <option value="點心">🍎 點心 / 補充</option>
+                        <select id="mealType" class="text-xs sm:text-sm font-semibold bg-white border border-slate-200 rounded-lg px-2 py-1 text-slate-800">
+                            <option value="早餐">🌅 早餐</option><option value="午餐">☀️ 午餐</option><option value="晚餐">🌙 晚餐</option><option value="點心">🍎 點心 / 補充</option>
                         </select>
                     </div>
 
-                    <!-- 相片拖曳與拍照上傳框 -->
-                    <div id="photoDropZone" 
-                         ondragover="handleDragOver(event)" 
-                         ondragleave="handleDragLeave(event)" 
-                         ondrop="handleDrop(event)"
-                         class="relative border-2 border-dashed border-emerald-300 hover:border-emerald-500 bg-emerald-50/40 rounded-2xl p-4 text-center transition cursor-pointer group"
-                         onclick="document.getElementById('mealPhotoInput').click()">
+                    <div id="photoDropZone" class="relative border-2 border-dashed border-emerald-300 bg-emerald-50/40 rounded-2xl p-4 text-center cursor-pointer group" onclick="document.getElementById('mealPhotoInput').click()">
                         <input type="file" id="mealPhotoInput" accept="image/*" class="hidden" onchange="handlePhotoFileSelect(event)">
-                        
-                        <!-- 未上傳時的提示 -->
                         <div id="photoUploadPrompt" class="py-2">
-                            <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </div>
-                            <p class="text-xs font-bold text-slate-700">點擊拍照 / 上傳餐點相片</p>
+                            <p class="text-xs font-bold text-slate-700">點擊拍照 / 上傳餐點相片 或 營養標示</p>
                         </div>
-
-                        <!-- 已上傳相片預覽 -->
                         <div id="photoPreviewContainer" class="hidden relative">
-                            <img id="uploadedPhotoPreview" src="" alt="餐點預覽" class="w-full h-32 sm:h-44 object-cover rounded-xl border border-slate-200 shadow-xs">
-                            <button type="button" onclick="clearUploadedPhoto(event)" class="absolute top-2 right-2 bg-slate-900/75 hover:bg-rose-600 text-white text-[10px] sm:text-xs font-semibold px-2 py-1 rounded-lg backdrop-blur-xs transition flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                移除
-                            </button>
+                            <img id="uploadedPhotoPreview" src="" alt="預覽" class="w-full h-32 sm:h-44 object-cover rounded-xl border border-slate-200 shadow-xs">
+                            <button type="button" onclick="clearUploadedPhoto(event)" class="absolute top-2 right-2 bg-slate-900/75 text-white text-[10px] px-2 py-1 rounded-lg">移除</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 面板 A：AI 相片辨識模式 -->
                 <div id="panelPhotoAI" class="space-y-4">
-                    <div>
-                        <input type="text" id="photoUserNote" placeholder="補充說明（選填，如：飯吃一半）" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    </div>
-
-                    <button type="button" id="aiAnalyzeBtn" onclick="analyzePhotoWithGemini()" class="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm shadow-emerald-600/20 transition flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        <span>AI 辨識餐點營養</span>
-                    </button>
-
-                    <!-- AI 辨識載入狀態 -->
-                    <div id="aiLoadingBox" class="hidden p-3 sm:p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 text-center space-y-2">
-                        <div class="inline-block w-5 h-5 sm:w-6 sm:h-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
-                        <p id="aiLoadingStatusText" class="text-[11px] sm:text-xs font-bold text-emerald-800">AI 正在分析相片...</p>
-                    </div>
-
-                    <!-- AI 辨識錯誤與排錯提示框 -->
-                    <div id="aiErrorBox" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 space-y-2">
-                        <div class="flex items-start justify-between gap-2">
-                            <span class="font-bold flex items-center gap-1 text-rose-700">辨識失敗</span>
-                            <button type="button" onclick="document.getElementById('aiErrorBox').classList.add('hidden')" class="text-rose-400 hover:text-rose-600">✕</button>
-                        </div>
-                        <p id="aiErrorMessage" class="text-[10px] sm:text-[11px] text-rose-700 leading-relaxed break-words"></p>
-                    </div>
-
-                    <!-- AI 辨識結果預覽與微調清單 -->
+                    <div><input type="text" id="photoUserNote" placeholder="補充說明（選填，如：這包我全吃完了）" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2"></div>
+                    <button type="button" onclick="analyzePhotoWithGemini()" class="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm">AI 辨識餐點營養</button>
+                    
+                    <div id="aiLoadingBox" class="hidden p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-center"><p class="text-[11px] font-bold text-emerald-800">AI 正在分析相片...</p></div>
+                    <div id="aiErrorBox" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800"><p id="aiErrorMessage"></p></div>
+                    
                     <div id="aiResultsContainer" class="hidden space-y-3 pt-2 border-t border-slate-200">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[11px] sm:text-xs font-bold text-slate-800">✨ AI 辨識結果（可微調倍率）</span>
-                            <span id="aiDetectedCount" class="text-[10px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">0 項</span>
-                        </div>
-                        <div id="aiDetectedList" class="space-y-2.5 max-h-60 sm:max-h-80 overflow-y-auto pr-1">
-                            <!-- 動態渲染 AI 辨識出的食物項目 -->
-                        </div>
+                        <div class="flex items-center justify-between"><span class="text-[11px] font-bold text-slate-800">✨ AI 辨識結果</span></div>
+                        <div id="aiDetectedList" class="space-y-2.5 max-h-60 overflow-y-auto pr-1"></div>
                         <div class="flex gap-2 pt-1">
-                            <button type="button" onclick="commitAiItemsToLog()" class="flex-1 py-2 sm:py-2.5 px-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-[11px] sm:text-xs rounded-xl shadow-xs transition flex items-center justify-center gap-1.5">
-                                加入今日餐點紀錄
-                            </button>
+                            <button type="button" onclick="commitAiItemsToLog()" class="flex-1 py-2 bg-slate-900 text-white font-bold text-[11px] rounded-xl shadow-xs">加入今日餐點紀錄</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 面板 B：預設食材庫 / 手動輸入模式 -->
                 <div id="panelManualEntry" class="hidden">
-                    <!-- 預設食材庫快速選擇 -->
                     <div class="mb-4 p-3 bg-emerald-50/60 border border-emerald-200/70 rounded-xl">
-                        <select id="presetSelect" onchange="handlePresetChange()" class="w-full text-xs sm:text-sm bg-white border border-emerald-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <option value="">-- 手動輸入或選擇預設食材 --</option>
+                        <select id="presetSelect" onchange="handlePresetChange()" class="w-full text-xs bg-white border border-emerald-300 rounded-lg px-2 py-1.5 focus:outline-none">
+                            <option value="">-- 手動自訂輸入或選擇預設食材 --</option>
                         </select>
-                        
-                        <!-- 倍率快速調整器 -->
                         <div id="multiplierBox" class="mt-2.5 pt-2 border-t border-emerald-200/60 hidden">
-                            <div class="flex items-center justify-between gap-1">
-                                <div class="flex flex-wrap items-center gap-1">
-                                    <button type="button" onclick="applyMultiplier(0.5)" class="px-1.5 py-0.5 text-[10px] font-semibold bg-white text-emerald-700 border border-emerald-200 rounded-md">0.5x</button>
-                                    <button type="button" onclick="applyMultiplier(1)" class="px-1.5 py-0.5 text-[10px] font-semibold bg-white text-emerald-700 border border-emerald-200 rounded-md">1x</button>
-                                    <button type="button" onclick="applyMultiplier(1.5)" class="px-1.5 py-0.5 text-[10px] font-semibold bg-white text-emerald-700 border border-emerald-200 rounded-md">1.5x</button>
-                                    <button type="button" onclick="applyMultiplier(2)" class="px-1.5 py-0.5 text-[10px] font-semibold bg-white text-emerald-700 border border-emerald-200 rounded-md">2x</button>
-                                </div>
-                                <input type="number" id="customMultiplier" step="0.1" min="0.1" value="1" oninput="applyMultiplier(this.value)" class="w-12 text-center text-xs bg-white border border-emerald-300 rounded-md py-0.5 font-bold text-emerald-900 focus:outline-none">
+                            <div class="flex items-center gap-1">
+                                <button type="button" onclick="applyMultiplier(0.5)" class="px-1.5 py-0.5 text-[10px] bg-white text-emerald-700 border rounded-md">0.5x</button>
+                                <button type="button" onclick="applyMultiplier(1)" class="px-1.5 py-0.5 text-[10px] bg-white text-emerald-700 border rounded-md">1x</button>
+                                <button type="button" onclick="applyMultiplier(2)" class="px-1.5 py-0.5 text-[10px] bg-white text-emerald-700 border rounded-md">2x</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 餐點輸入表單 -->
                     <form id="mealForm" onsubmit="handleAddMeal(event)" class="space-y-3">
-                        <div>
-                            <input type="text" id="foodName" required placeholder="食物名稱 (必填)" class="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 focus:bg-white focus:outline-none">
-                        </div>
-
+                        <input type="text" id="foodName" required placeholder="食物名稱 (必填)" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
                         <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <input type="text" id="foodPortion" required placeholder="份量 (如: 100g)" class="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 focus:bg-white focus:outline-none">
-                            </div>
-                            <div class="relative">
-                                <input type="number" id="foodKcal" step="0.1" min="0" required placeholder="熱量 kcal" class="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 font-semibold text-slate-900 focus:bg-white focus:outline-none">
-                                <button type="button" onclick="autoCalcKcalFromPFC()" class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-emerald-600 bg-emerald-50 px-1 py-0.5 rounded" title="依 PFC 自動計算">自動算</button>
-                            </div>
+                            <input type="text" id="foodPortion" required placeholder="份量 (如: 1杯)" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
+                            <input type="number" id="foodKcal" step="0.1" min="0" required placeholder="熱量 kcal" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 font-semibold">
                         </div>
-
-                        <!-- 三大營養素輸入 -->
-                        <div class="p-2 sm:p-3 bg-slate-50 rounded-xl border border-slate-200/70 space-y-2">
-                            <div class="text-[10px] sm:text-xs font-bold text-slate-500 flex justify-between">
-                                <span>營養素 (g)</span>
-                                <span id="liveFormPFCPreview" class="text-[9px] sm:text-[10px] font-medium text-slate-400">P:0% F:0% C:0%</span>
-                            </div>
+                        <div class="p-2 bg-slate-50 rounded-xl border border-slate-200/70 space-y-2">
+                            <div class="text-[10px] font-bold text-slate-500">營養素 (g)</div>
                             <div class="grid grid-cols-3 gap-2">
-                                <div>
-                                    <input type="number" id="foodP" step="0.1" min="0" required placeholder="蛋白質 P" oninput="updateLiveFormPFC()" class="w-full text-xs bg-white border border-blue-200 rounded-lg px-2 py-1.5 text-slate-800 focus:outline-none">
-                                </div>
-                                <div>
-                                    <input type="number" id="foodF" step="0.1" min="0" required placeholder="脂肪 F" oninput="updateLiveFormPFC()" class="w-full text-xs bg-white border border-amber-200 rounded-lg px-2 py-1.5 text-slate-800 focus:outline-none">
-                                </div>
-                                <div>
-                                    <input type="number" id="foodC" step="0.1" min="0" required placeholder="碳水 C" oninput="updateLiveFormPFC()" class="w-full text-xs bg-white border border-emerald-200 rounded-lg px-2 py-1.5 text-slate-800 focus:outline-none">
-                                </div>
+                                <input type="number" id="foodP" step="0.1" min="0" required placeholder="蛋白質 P" class="w-full text-xs bg-white border border-blue-200 rounded-lg px-2 py-1.5">
+                                <input type="number" id="foodF" step="0.1" min="0" required placeholder="脂肪 F" class="w-full text-xs bg-white border border-amber-200 rounded-lg px-2 py-1.5">
+                                <input type="number" id="foodC" step="0.1" min="0" required placeholder="碳水 C" class="w-full text-xs bg-white border border-emerald-200 rounded-lg px-2 py-1.5">
                             </div>
                         </div>
-
-                        <!-- 鈉與鉀輸入 -->
                         <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <input type="number" id="foodNa" step="1" min="0" value="0" placeholder="鈉 Na (mg)" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 focus:bg-white focus:outline-none">
-                            </div>
-                            <div>
-                                <input type="number" id="foodK" step="1" min="0" value="0" placeholder="鉀 K (mg)" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-800 focus:bg-white focus:outline-none">
-                            </div>
+                            <input type="number" id="foodNa" step="1" min="0" value="0" placeholder="鈉 Na (mg)" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
+                            <input type="number" id="foodK" step="1" min="0" value="0" placeholder="鉀 K (mg)" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
                         </div>
-
                         <div class="pt-2 flex gap-2">
-                            <button type="submit" class="flex-1 py-2 sm:py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-[11px] sm:text-xs rounded-xl shadow-sm transition">
-                                加入餐單
-                            </button>
-                            <button type="button" onclick="resetMealForm()" class="px-3 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] sm:text-xs font-semibold rounded-xl transition">
-                                重設
-                            </button>
+                            <button type="submit" class="flex-1 py-2 bg-emerald-600 text-white font-semibold text-[11px] rounded-xl shadow-sm">加入當日餐單</button>
+                            <button type="button" onclick="resetMealForm()" class="px-3 py-2 bg-slate-100 text-slate-600 text-[11px] font-semibold rounded-xl">重設</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- 右側：詳細餐點分析表格 (佔 8 欄) -->
             <div class="lg:col-span-8 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-6 flex flex-col overflow-hidden">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                     <div>
-                        <h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2">
-                            <span class="w-2 h-5 bg-indigo-500 rounded-full"></span>
-                            今日紀錄表
-                            <span id="mealCountBadge" class="ml-1 px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-bold bg-slate-100 text-slate-600 rounded-full">0 項</span>
-                        </h2>
+                        <h2 class="text-sm sm:text-base font-bold text-slate-800 flex items-center gap-2"><span class="w-2 h-5 bg-indigo-500 rounded-full"></span>今日紀錄表<span id="mealCountBadge" class="ml-1 px-1.5 py-0.5 text-[10px] font-bold bg-slate-100 text-slate-600 rounded-full">0 項</span></h2>
                     </div>
-
-                    <!-- 餐別篩選器與清空/匯出按鈕 -->
                     <div class="flex flex-wrap items-center gap-1.5">
-                        <div class="inline-flex p-1 bg-slate-100 rounded-xl text-[10px] sm:text-xs font-semibold">
-                            <button onclick="setMealFilter('全部')" id="filter-全部" class="px-2 py-1 rounded-lg bg-white text-slate-800 shadow-sm transition">全部</button>
-                            <button onclick="setMealFilter('早餐')" id="filter-早餐" class="px-2 py-1 rounded-lg text-slate-600 transition">早餐</button>
-                            <button onclick="setMealFilter('午餐')" id="filter-午餐" class="px-2 py-1 rounded-lg text-slate-600 transition">午餐</button>
-                            <button onclick="setMealFilter('晚餐')" id="filter-晚餐" class="px-2 py-1 rounded-lg text-slate-600 transition">晚餐</button>
-                            <button onclick="setMealFilter('點心')" id="filter-點心" class="px-2 py-1 rounded-lg text-slate-600 transition">點心</button>
-                        </div>
-
-                        <!-- 匯出 Excel 並結算按鈕 -->
-                        <button onclick="exportAndReset()" class="ml-auto px-2 sm:px-3 py-1.5 text-[10px] sm:text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl transition flex items-center gap-1 shadow-sm">
-                            📊 匯出並結算
-                        </button>
+                        <button onclick="exportAndReset()" class="ml-auto px-2 sm:px-3 py-1.5 text-[10px] sm:text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-xl shadow-sm">📊 匯出 Excel 並結算</button>
                     </div>
                 </div>
 
-                <!-- 響應式表格容器 -->
                 <div class="overflow-x-auto -mx-4 sm:mx-0 border-t sm:border border-slate-200/80 sm:rounded-xl">
                     <table class="w-full text-left border-collapse min-w-[700px]">
                         <thead>
-                            <tr class="bg-slate-50/90 text-slate-500 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider border-b border-slate-200/80">
-                                <th class="py-2.5 px-2">餐別</th>
-                                <th class="py-2.5 px-2 text-center">相片</th>
-                                <th class="py-2.5 px-2">名稱/份量</th>
-                                <th class="py-2.5 px-2 text-right">熱量</th>
-                                <th class="py-2.5 px-2 text-right text-blue-600">P(g)</th>
-                                <th class="py-2.5 px-2 text-right text-amber-600">F(g)</th>
-                                <th class="py-2.5 px-2 text-right text-emerald-600">C(g)</th>
-                                <th class="py-2.5 px-2 text-right">Na</th>
-                                <th class="py-2.5 px-2 text-right">K</th>
-                                <th class="py-2.5 px-2 text-center w-32">PFC(%)</th>
-                                <th class="py-2.5 px-2 text-center">操作</th>
+                            <tr class="bg-slate-50/90 text-slate-500 text-[10px] font-bold uppercase border-b border-slate-200/80">
+                                <th class="py-2.5 px-2">餐別</th><th class="py-2.5 px-2">名稱/份量</th><th class="py-2.5 px-2 text-right">熱量</th>
+                                <th class="py-2.5 px-2 text-right text-blue-600">P(g)</th><th class="py-2.5 px-2 text-right text-amber-600">F(g)</th><th class="py-2.5 px-2 text-right text-emerald-600">C(g)</th>
+                                <th class="py-2.5 px-2 text-right">Na</th><th class="py-2.5 px-2 text-right">K</th><th class="py-2.5 px-2 text-center">操作</th>
                             </tr>
                         </thead>
-                        <tbody id="mealTableBody" class="divide-y divide-slate-100 text-xs sm:text-sm">
-                            <!-- 由 JavaScript 動態渲染 -->
-                        </tbody>
-                        <tfoot id="mealTableFoot" class="bg-slate-50 font-bold text-slate-800 text-[11px] sm:text-xs border-t-2 border-slate-200">
-                            <!-- 由 JavaScript 動態渲染小計 -->
-                        </tfoot>
+                        <tbody id="mealTableBody" class="divide-y divide-slate-100 text-xs"></tbody>
                     </table>
                 </div>
-
-                <!-- 空狀態提示 -->
-                <div id="emptyStateBox" class="hidden py-10 text-center">
-                    <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                        </svg>
-                    </div>
-                    <p class="text-[11px] sm:text-sm font-semibold text-slate-600">目前沒有符合的紀錄</p>
-                </div>
+                <div id="emptyStateBox" class="hidden py-10 text-center"><p class="text-[11px] font-semibold text-slate-600">目前沒有紀錄</p></div>
             </div>
         </section>
     </main>
 
-    <!-- Modal 與通知等共用元件 (保留原樣) -->
-    <!-- 餐點相片檢視 Modal -->
-    <div id="photoInspectModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs hidden items-center justify-center p-4" onclick="closePhotoInspectModal()">
-        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200" onclick="event.stopPropagation()">
-            <div class="flex items-center justify-between px-4 py-3 border-b border-slate-100">
-                <div>
-                    <span id="inspectModalMealBadge" class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-emerald-50 text-emerald-700 mr-1.5">早餐</span>
-                    <h3 id="inspectModalTitle" class="inline text-sm font-bold text-slate-900">檢視</h3>
-                </div>
-                <button onclick="closePhotoInspectModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
-            </div>
-            <div class="bg-slate-950 flex items-center justify-center max-h-[300px] overflow-hidden">
-                <img id="inspectModalImage" src="" alt="大圖" class="max-h-[300px] w-auto object-contain">
-            </div>
-        </div>
-    </div>
-
-    <!-- Gemini API 金鑰設定 Modal -->
-    <div id="apiKeyModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4" onclick="closeApiKeyModal()">
-        <div class="bg-white rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-slate-200" onclick="event.stopPropagation()">
+    <div id="apiKeyModal" class="fixed inset-0 z-50 bg-slate-900/60 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-200">
             <h3 class="text-base font-bold text-slate-900 mb-3">設定 Google Gemini API 金鑰</h3>
             <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." class="w-full text-sm bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 mb-3">
             <div class="flex justify-end gap-2">
@@ -716,11 +391,9 @@
             </div>
         </div>
     </div>
-
-    <!-- 每日目標設定 Modal -->
-    <div id="targetModal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl border border-slate-200">
-            <h3 class="text-base font-bold text-slate-900 mb-3">設定每日目標</h3>
+    <div id="targetModal" class="fixed inset-0 z-50 bg-slate-900/50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200">
+            <h3 class="text-base font-bold mb-3">設定每日目標</h3>
             <form id="targetForm" onsubmit="saveTargets(event)" class="space-y-3">
                 <div><label class="text-xs">總熱量</label><input type="number" id="inputTargetKcal" class="w-full text-sm border rounded-lg px-2 py-1"></div>
                 <div class="grid grid-cols-3 gap-2">
@@ -743,49 +416,29 @@
             </form>
         </div>
     </div>
-
-    <!-- 手機雲端同步與跨裝置備份 Modal -->
-    <div id="cloudSyncModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4" onclick="closeCloudSyncModal()">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200" onclick="event.stopPropagation()">
+    <div id="cloudSyncModal" class="fixed inset-0 z-50 bg-slate-900/60 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl border border-slate-200">
             <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
                 <h3 class="text-base font-bold text-slate-900">手機 ⇄ 電腦 雲端同步</h3>
                 <button onclick="closeCloudSyncModal()" class="text-slate-400 p-1">✕</button>
             </div>
             <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
-                <p class="text-xs text-emerald-800 mb-2">輸入專屬「同步通行碼」開啟雙邊即時連線：</p>
+                <p class="text-xs text-emerald-800 mb-2">輸入專屬「同步通行碼」開啟連線：</p>
                 <div class="flex gap-2">
-                    <input type="text" id="syncPasscodeInput" placeholder="通行碼" class="flex-1 text-sm border rounded-lg px-3 py-1.5 font-bold">
-                    <button type="button" onclick="connectCloudSyncWithPasscode()" class="px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs">啟用</button>
+                    <input type="text" id="syncPasscodeInput" placeholder="例如: alan-fit-888" class="flex-1 text-sm border rounded-lg px-3 py-1.5 font-bold">
+                    <button type="button" onclick="connectCloudSyncWithPasscode()" class="px-3 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs">啟用同步</button>
                 </div>
                 <div class="mt-2 flex justify-between text-[10px] text-slate-500">
-                    <span id="currentAuthUidDisplay">未連線</span>
-                    <button onclick="disconnectCloudSync()" class="text-rose-600 underline">中斷</button>
+                    <span id="currentAuthUidDisplay">尚未連線</span>
+                    <button onclick="disconnectCloudSync()" class="text-rose-600 underline">中斷同步</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- iOS 捷徑說明 Modal -->
-    <div id="iosShortcutModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4" onclick="closeIosShortcutModal()">
-        <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-3">
-                <h3 class="font-bold">iOS 捷徑自動帶入</h3>
-                <button onclick="closeIosShortcutModal()">✕</button>
-            </div>
-            <div class="text-xs text-slate-600 space-y-2">
-                <p>您可以使用 iPhone「捷徑」App，抓取健康資料後透過網址參數直接打開本網頁並自動填寫。</p>
-                <code class="block bg-slate-100 p-2 rounded text-[10px] break-all">https://您的網址/?resting=[靜息能量變數]&active=[活動能量變數]</code>
-            </div>
-        </div>
+    <div id="toastBox" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5 text-xs font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span><span id="toastMessage">已更新</span>
     </div>
 
-    <!-- 浮動通知 Toast -->
-    <div id="toastBox" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5 text-xs font-medium">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span id="toastMessage">已更新</span>
-    </div>
-
-    <!-- Firebase 載入與設定 -->
     <script>
         window.__firebase_config = JSON.stringify({
             apiKey: "AIzaSyAdhxyVl3z3fqxaHepX7NLC0AN0q0bwYCo",
@@ -796,25 +449,19 @@
             appId: "1:873903932965:web:6376cb07be93b9217f61cc"
         });
     </script>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const appId = 'default-macro-app';
-        let db = null;
-        let auth = null;
-        let currentUser = null;
-        let unsubscribeSnapshot = null;
-        let isApplyingRemoteUpdate = false;
+        let db = null; let auth = null; let currentUser = null; let unsubscribeSnapshot = null; let isApplyingRemoteUpdate = false;
 
         async function initCloudService() {
             try {
                 if (typeof __firebase_config === 'undefined' || !__firebase_config) return;
                 const app = initializeApp(JSON.parse(__firebase_config));
-                db = getFirestore(app);
-                auth = getAuth(app);
+                db = getFirestore(app); auth = getAuth(app);
                 
                 try {
                     await signInAnonymously(auth);
@@ -825,37 +472,32 @@
                 onAuthStateChanged(auth, (user) => {
                     currentUser = user;
                     const uidEl = document.getElementById('currentAuthUidDisplay');
-                    if (uidEl) uidEl.textContent = user ? user.uid : '未連線';
+                    if (uidEl) uidEl.textContent = user ? `已連線: ${user.uid.substring(0,6)}...` : '尚未連線';
                     
                     if (user && window.activeSyncPasscode) {
                         subscribeToPasscodeDoc(window.activeSyncPasscode);
                     } else if (user) {
-                        updateCloudStatusUI('ready', '雲端待命');
+                        updateCloudStatusUI('ready');
                     }
                 });
             } catch (err) {
                 console.error('雲端初始化錯誤:', err);
-                updateCloudStatusUI('offline', '單機模式');
+                updateCloudStatusUI('offline');
             }
         }
 
-        function sanitizePasscode(raw) {
-            return String(raw || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-');
-        }
+        function sanitizePasscode(raw) { return String(raw || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-'); }
 
-        function updateCloudStatusUI(state, labelText) {
+        function updateCloudStatusUI(state) {
             const dot = document.getElementById('cloudSyncStatusDot');
             const navText = document.getElementById('cloudSyncNavText');
             if (!dot || !navText) return;
             if (state === 'synced') {
-                dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
-                navText.textContent = '已同步';
+                dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse'; navText.textContent = '已同步';
             } else if (state === 'ready') {
-                dot.className = 'w-2 h-2 rounded-full bg-amber-400';
-                navText.textContent = '雲端待命';
+                dot.className = 'w-2 h-2 rounded-full bg-amber-400'; navText.textContent = '雲端待命';
             } else {
-                dot.className = 'w-2 h-2 rounded-full bg-slate-400';
-                navText.textContent = '單機模式';
+                dot.className = 'w-2 h-2 rounded-full bg-slate-400'; navText.textContent = '單機模式';
             }
         }
 
@@ -873,22 +515,19 @@
                     mealLogsJson: JSON.stringify(cleanMeals)
                 });
                 updateCloudStatusUI('synced');
-            } catch (e) {}
+            } catch (e) { console.error("上傳失敗", e); }
         }
 
         function subscribeToPasscodeDoc(code) {
             if (!db || !currentUser) return;
-            code = sanitizePasscode(code);
-            if (code.length < 4) return;
+            code = sanitizePasscode(code); if (code.length < 4) { alert("通行碼太短"); return; }
             if (unsubscribeSnapshot) unsubscribeSnapshot();
             
             window.activeSyncPasscode = code;
             localStorage.setItem('tw_macro_sync_passcode', code);
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'macro_sync_rooms', code);
 
-            getDoc(docRef).then((snap) => {
-                if (!snap.exists()) pushCurrentStateToCloud();
-            });
+            getDoc(docRef).then((snap) => { if (!snap.exists()) pushCurrentStateToCloud(); });
 
             unsubscribeSnapshot = onSnapshot(docRef, (snapshot) => {
                 if (!snapshot.exists()) return;
@@ -896,8 +535,7 @@
                 isApplyingRemoteUpdate = true;
                 try {
                     window.applyCloudState({
-                        ...data,
-                        mealLogs: data.mealLogsJson ? JSON.parse(data.mealLogsJson) : []
+                        ...data, mealLogs: data.mealLogsJson ? JSON.parse(data.mealLogsJson) : []
                     });
                     updateCloudStatusUI('synced');
                 } catch (e) {} finally {
@@ -911,43 +549,36 @@
             const input = document.getElementById('syncPasscodeInput');
             input.value = sanitizePasscode(input.value);
             subscribeToPasscodeDoc(input.value);
+            closeCloudSyncModal(); showToast('已連接同步房間');
         };
         window.disconnectCloudSync = () => {
             if (unsubscribeSnapshot) unsubscribeSnapshot();
-            window.activeSyncPasscode = '';
-            localStorage.removeItem('tw_macro_sync_passcode');
+            window.activeSyncPasscode = ''; localStorage.removeItem('tw_macro_sync_passcode');
             document.getElementById('syncPasscodeInput').value = '';
-            updateCloudStatusUI('ready');
+            updateCloudStatusUI('ready'); showToast('已中斷同步');
         };
 
         initCloudService();
     </script>
 
-    <!-- 核心邏輯 -->
     <script>
         const FOOD_PRESETS = [
             { id: 'tw_oily_rice', category: '外食', name: '傳統油飯', portion: '1小碗', kcal: 420, p: 10.5, f: 12.0, c: 67.0, na: 680, k: 140 },
             { id: 'chicken_breast', category: '蛋白質', name: '舒肥雞胸肉', portion: '100g', kcal: 109, p: 23.3, f: 0.9, c: 0.6, na: 45, k: 310 },
             { id: 'egg', category: '蛋白質', name: '水煮蛋', portion: '1顆', kcal: 75, p: 6.9, f: 4.9, c: 0.8, na: 210, k: 68 },
-            { id: 'whey', category: '蛋白質', name: '乳清蛋白粉', portion: '1匙 (35g)', kcal: 135, p: 25.0, f: 2.0, c: 3.5, na: 75, k: 160 },
+            { id: 'whey', category: '蛋白質', name: '乳清蛋白粉', portion: '1匙', kcal: 135, p: 25.0, f: 2.0, c: 3.5, na: 75, k: 160 },
             { id: 'white_rice', category: '碳水', name: '白飯', portion: '1碗 (160g)', kcal: 293, p: 5.0, f: 0.5, c: 65.6, na: 3, k: 64 },
             { id: 'sweet_potato', category: '碳水', name: '烤地瓜', portion: '1條 (150g)', kcal: 186, p: 2.1, f: 0.3, c: 44.3, na: 63, k: 435 }
         ];
 
         let dailyTargets = { kcal: 2000, p: 140, f: 65, c: 215, na: 2300, k: 3500, water: 2500, deficit: 400 };
-        // 修改為極簡消耗狀態：只有基礎代謝與紅圈活動
         let burnState = { restingKcal: 1480, activeBaseKcal: 350 };
         let currentWaterMl = 0;
         let mealLogs = [];
-        let currentMealFilter = '全部';
-        let activePresetItem = null;
         let userGeminiApiKey = '';
         window.activeSyncPasscode = '';
 
-        let currentPhotoDataUrl = null;
-        let currentPhotoBase64 = null;
-        let currentPhotoMimeType = 'image/jpeg';
-        let aiDetectedItems = [];
+        let currentPhotoDataUrl = null; let currentPhotoBase64 = null; let aiDetectedItems = [];
 
         window.getAppState = () => ({ dailyTargets, burnState, currentWaterMl, mealLogs });
         window.applyCloudState = (state) => {
@@ -955,226 +586,54 @@
             if (state.burnState) burnState = { ...burnState, ...state.burnState };
             if (typeof state.currentWaterMl === 'number') currentWaterMl = state.currentWaterMl;
             if (state.mealLogs) mealLogs = state.mealLogs;
-            saveStateToStorage(true);
-            renderAll();
+            saveStateToStorage(true); renderAll();
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            populatePresetDropdown();
-            loadStateFromStorage();
-            checkUrlHealthParams();
-            renderAll();
+            populatePresetDropdown(); loadStateFromStorage(); renderAll();
         });
 
-        function checkUrlHealthParams() {
-            const params = new URLSearchParams(window.location.search);
-            let updated = false;
-            if (params.has('resting')) { burnState.restingKcal = Math.round(Number(params.get('resting'))); updated = true; }
-            if (params.has('active')) { burnState.activeBaseKcal = Math.round(Number(params.get('active'))); updated = true; }
-            if (updated) {
-                saveStateToStorage();
-                window.history.replaceState(null, '', window.location.pathname);
-                showToast('已從捷徑匯入消耗熱量');
-            }
-        }
-
         function handleAwScreenshotUpload(e) {
-            const file = e.target?.files?.[0];
-            if (!file) return;
-
-            const statusBox = document.getElementById('awAiStatusBox');
-            statusBox.classList.remove('hidden');
-            document.getElementById('awScreenshotBtn').disabled = true;
-
+            const file = e.target?.files?.[0]; if (!file) return;
+            document.getElementById('awAiStatusBox').classList.remove('hidden');
             const reader = new FileReader();
             reader.onload = (evt) => {
                 const img = new Image();
                 img.onload = async () => {
-                    const canvas = document.createElement('canvas');
-                    let w = img.width, h = img.height;
-                    if (w > 800) { h *= 800/w; w = 800; }
-                    canvas.width = w; canvas.height = h;
+                    const canvas = document.createElement('canvas'); let w = img.width, h = img.height;
+                    if (w > 800) { h *= 800/w; w = 800; } canvas.width = w; canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
                     const base64Data = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
-
-                    // 簡化 Prompt：只抓靜息能量與紅圈活動
-                    const prompt = `請讀取這張 Apple 健身/健康截圖。尋找並回傳兩個數字(JSON格式)：
-                    {"restingKcal": 靜息能量數值(數字或null), "activeKcal": 活動能量紅圈數值(數字或null)}`;
-
+                    const prompt = `請讀取這張 Apple 健身/健康截圖。尋找並回傳兩個數字(JSON格式)：{"restingKcal": 靜息能量數值, "activeKcal": 活動能量紅圈數值}`;
                     try {
                         const { data } = await callGeminiModelsWithFallback({
                             contents: [{ role: 'user', parts: [{ text: prompt }, { inlineData: { mimeType: 'image/jpeg', data: base64Data } }] }]
                         });
                         const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
                         const parsed = JSON.parse(raw.replace(/```(?:json)?/gi, '').trim());
-
                         if (parsed.restingKcal) burnState.restingKcal = Number(parsed.restingKcal);
                         if (parsed.activeKcal) burnState.activeBaseKcal = Number(parsed.activeKcal);
-
-                        saveStateToStorage();
-                        renderAll();
-                        showToast('✅ AI 已自動讀取熱量消耗');
-                    } catch (err) {
-                        showToast('❌ 辨識失敗，請確認 API 金鑰');
-                    } finally {
-                        statusBox.classList.add('hidden');
-                        document.getElementById('awScreenshotBtn').disabled = false;
-                        e.target.value = '';
+                        saveStateToStorage(); renderAll(); showToast('✅ AI 已讀取熱量消耗');
+                    } catch (err) { showToast('❌ 辨識失敗'); } finally {
+                        document.getElementById('awAiStatusBox').classList.add('hidden'); e.target.value = '';
                     }
-                };
-                img.src = evt.target.result;
-            };
-            reader.readAsDataURL(file);
+                }; img.src = evt.target.result;
+            }; reader.readAsDataURL(file);
         }
 
-        async function callGeminiModelsWithFallback(payload) {
-            const key = userGeminiApiKey || localStorage.getItem('tw_macro_gemini_api_key');
-            const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-            for (const m of models) {
-                try {
-                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${key}`, {
-                        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
-                    });
-                    if (res.ok) return { data: await res.json(), modelUsed: m };
-                } catch (e) {}
-            }
-            throw new Error('API 呼叫失敗');
-        }
-
-        function calculateTotalBurnKcal() {
-            const resting = Number(burnState.restingKcal) || 0;
-            const activeBase = Number(burnState.activeBaseKcal) || 0;
-            return {
-                resting,
-                activeBase,
-                totalTdee: Math.round(resting + activeBase)
-            };
-        }
-
-        function handleAwEnergyChange() {
-            burnState.restingKcal = Math.max(0, Math.round(Number(document.getElementById('awRestingInput').value)));
-            burnState.activeBaseKcal = Math.max(0, Math.round(Number(document.getElementById('awActiveBaseInput').value)));
-            saveStateToStorage();
-            renderDashboard();
-            renderBurnSection();
-        }
-
-        function renderBurnSection() {
-            document.getElementById('awRestingInput').value = burnState.restingKcal;
-            document.getElementById('awActiveBaseInput').value = burnState.activeBaseKcal;
-
-            const burn = calculateTotalBurnKcal();
-            const totalIntake = Math.round(mealLogs.reduce((s, m) => s + m.kcal, 0));
-            const deficit = burn.totalTdee - totalIntake;
-            const targetDeficit = dailyTargets.deficit || 400;
-
-            document.getElementById('cardTdeeValue').textContent = burn.totalTdee.toLocaleString();
-            document.getElementById('cardIntakeValue').textContent = totalIntake.toLocaleString();
-            
-            const defValEl = document.getElementById('cardDeficitValue');
-            const netLabel = document.getElementById('cardNetLabel');
-            const statusPill = document.getElementById('deficitStatusPill');
-            const barEl = document.getElementById('deficitProgressBar');
-            
-            document.getElementById('miniTdeeDisplay').textContent = burn.totalTdee.toLocaleString();
-            document.getElementById('miniTargetDeficitDisplay').textContent = targetDeficit;
-
-            if (deficit >= 0) {
-                netLabel.textContent = '熱量缺口';
-                defValEl.textContent = `-${deficit}`;
-                defValEl.className = 'text-lg sm:text-xl font-black text-emerald-400';
-                document.getElementById('miniDeficitLabel').textContent = '🔥 缺口';
-                document.getElementById('miniDeficitDisplay').textContent = `-${deficit}`;
-                document.getElementById('miniDeficitDisplay').className = 'text-xs sm:text-sm font-extrabold text-emerald-600';
-                
-                const pct = targetDeficit > 0 ? Math.min(100, Math.round((deficit/targetDeficit)*100)) : 100;
-                document.getElementById('deficitProgressPct').textContent = `${pct}%`;
-                barEl.style.width = `${pct}%`;
-                barEl.className = 'h-full bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full transition-all';
-                statusPill.textContent = deficit > 1000 ? '缺口過大' : '減脂中';
-            } else {
-                netLabel.textContent = '熱量盈餘';
-                defValEl.textContent = `+${Math.abs(deficit)}`;
-                defValEl.className = 'text-lg sm:text-xl font-black text-rose-400';
-                document.getElementById('miniDeficitLabel').textContent = '⚠️ 盈餘';
-                document.getElementById('miniDeficitDisplay').textContent = `+${Math.abs(deficit)}`;
-                document.getElementById('miniDeficitDisplay').className = 'text-xs sm:text-sm font-extrabold text-rose-600';
-                
-                document.getElementById('deficitProgressPct').textContent = '0%';
-                barEl.style.width = '100%';
-                barEl.className = 'h-full bg-rose-500 rounded-full transition-all';
-                statusPill.textContent = '熱量超標';
-            }
-        }
-
-        // CSV 匯出更新 (移除運動消耗欄位)
-        window.exportAndReset = function() {
-            if (mealLogs.length === 0 && currentWaterMl === 0) { showToast('無資料可結算'); return; }
-            const dateStr = new Date().toLocaleDateString('zh-TW').replace(/\//g, '-');
-            const burn = calculateTotalBurnKcal();
-            let sums = { '早餐':0, '午餐':0, '晚餐':0, '點心':0, p:0, f:0, c:0, na:0, k:0, kcal:0 };
-            
-            mealLogs.forEach(m => {
-                sums[m.mealType] = (sums[m.mealType] || 0) + m.kcal;
-                sums.p+=m.p; sums.f+=m.f; sums.c+=m.c; sums.na+=m.na; sums.k+=m.k; sums.kcal+=m.kcal;
-            });
-
-            const headers = ["日期", "總消耗TDEE", "基礎代謝BMR", "活動消耗(紅圈)", "總攝取kcal", "早餐", "午餐", "晚餐", "點心", "蛋白質g", "脂肪g", "碳水g", "鈉mg", "鉀mg", "純水ml", "熱量缺口"];
-            const row = [dateStr, burn.totalTdee, burn.resting, burn.activeBase, Math.round(sums.kcal), Math.round(sums['早餐']), Math.round(sums['午餐']), Math.round(sums['晚餐']), Math.round(sums['點心']), round1(sums.p), round1(sums.f), round1(sums.c), sums.na, sums.k, currentWaterMl, burn.totalTdee - sums.kcal];
-            
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(new Blob(["\uFEFF" + headers.join(",") + "\n" + row.join(",")], { type: 'text/csv;charset=utf-8;' }));
-            link.download = `健康結算_${dateStr}.csv`;
-            document.body.appendChild(link);
-            link.click(); document.body.removeChild(link);
-
-            mealLogs = []; currentWaterMl = 0;
-            saveStateToStorage(); renderAll();
-            showToast('✅ 報表已下載並完成今日結算！');
-        };
-
-        function switchInputMode(m) {
-            document.getElementById('panelPhotoAI').classList.toggle('hidden', m !== 'photo');
-            document.getElementById('panelManualEntry').classList.toggle('hidden', m !== 'manual');
-        }
-        function handleDragOver(e) { e.preventDefault(); }
-        function handleDragLeave(e) { e.preventDefault(); }
-        function handleDrop(e) { e.preventDefault(); if (e.dataTransfer?.files?.length) processAndPreviewImage(e.dataTransfer.files[0]); }
-        function handlePhotoFileSelect(e) { if (e.target?.files?.length) processAndPreviewImage(e.target.files[0]); }
-        function processAndPreviewImage(file) {
-            const r = new FileReader(); r.onload = e => {
-                const img = new Image(); img.onload = () => {
-                    const cvs = document.createElement('canvas');
-                    let w = img.width, h = img.height;
-                    if(w>800||h>800){ if(w>h){h*=800/w;w=800;}else{w*=800/h;h=800;} }
-                    cvs.width=w; cvs.height=h; cvs.getContext('2d').drawImage(img,0,0,w,h);
-                    currentPhotoDataUrl = cvs.toDataURL('image/jpeg', 0.8);
-                    currentPhotoBase64 = currentPhotoDataUrl.split(',')[1];
-                    document.getElementById('uploadedPhotoPreview').src = currentPhotoDataUrl;
-                    document.getElementById('photoUploadPrompt').classList.add('hidden');
-                    document.getElementById('photoPreviewContainer').classList.remove('hidden');
-                }; img.src = e.target.result;
-            }; r.readAsDataURL(file);
-        }
-        function clearUploadedPhoto() {
-            currentPhotoDataUrl = null; currentPhotoBase64 = null;
-            document.getElementById('mealPhotoInput').value = '';
-            document.getElementById('photoPreviewContainer').classList.add('hidden');
-            document.getElementById('photoUploadPrompt').classList.remove('hidden');
-        }
-        
         async function analyzePhotoWithGemini() {
             if(!currentPhotoBase64){ showToast('請先上傳相片'); return;}
             document.getElementById('aiLoadingBox').classList.remove('hidden');
-            
-            // 抓取使用者的補充說明
+            document.getElementById('aiErrorBox').classList.add('hidden');
+
             const userNote = document.getElementById('photoUserNote').value.trim();
             const noteText = userNote ? `使用者補充說明：「${userNote}」。請將此說明納入計算考量（例如計算整包或一半的份量）。\n` : '';
-            
-            // 強化 Prompt：針對營養標示表與回傳格式做嚴格規範
-            const prompt = noteText + `請分析這張相片。如果是食物實體，請估算其熱量與營養素；如果是「營養標示表」，請準確讀取上方的數值，並根據標示的「每份」或「每100公克」以及總份量來計算總和。
-            請務必只回傳純 JSON 陣列格式，絕對不要包含任何其他引言或文字說明。欄位若無資料請填 0。格式範例：
-            [{"name":"食物名稱","portion":"份量(如1整包或300g)","kcal":100,"p":10,"f":5,"c":2,"na":100,"k":50}]`;
+            const prompt = noteText + `請分析這張圖片（可能是實體食物或台灣的營養標示表）。
+    任務規則：
+    1. 若為「營養標示」，請優先尋找「每份」與「本包裝含X份」，計算出「整份/整包的總和」。
+    2. 如果圖片中看不出食物名稱，name 請預設填入「AI 辨識食品」。
+    3. 【嚴格要求】只能回傳純 JSON 陣列格式，絕對不要包含任何 Markdown 語法 (不要加 \`\`\`json) 或引言說明。
+    格式範例：[{"name":"無糖豆漿(範例)","portion":"1包","kcal":167.4,"p":15,"f":7.6,"c":14,"na":88,"k":0}]`;
 
             try {
                 const { data } = await callGeminiModelsWithFallback({
@@ -1182,39 +641,54 @@
                 });
                 
                 let txt = data.candidates[0].content.parts[0].text;
-                // 清理 Markdown 標記，確保能被 JSON.parse 解析
-                let jsonStr = txt.replace(/```(?:json)?/gi, '').trim();
+                console.log("AI 原始回傳：", txt); // 加入 Console 方便除錯
+                
+                // 更強大的 JSON 清理
+                let jsonStr = txt.replace(/```(?:json)?/gi, '').replace(/```/g, '').trim();
                 let parsed = JSON.parse(jsonStr);
-                
                 if(!Array.isArray(parsed)) parsed = parsed.items || [parsed];
-                
-                // 確保數值格式正確，避免出現 NaN
-                aiDetectedItems = parsed.map(i => ({
-                    name: i.name || '未知食物',
-                    portion: i.portion || '1份',
-                    kcal: Number(i.kcal) || 0,
-                    p: Number(i.p) || 0,
-                    f: Number(i.f) || 0,
-                    c: Number(i.c) || 0,
-                    na: Number(i.na) || 0,
-                    k: Number(i.k) || 0,
-                    tempId: Date.now() + Math.random(), 
-                    checked: true, 
-                    multiplier: 1
+
+                aiDetectedItems = parsed.map((i, idx) => ({
+                    name: i.name || '未知食物', portion: i.portion || '1份',
+                    kcal: Number(i.kcal) || 0, p: Number(i.p) || 0, f: Number(i.f) || 0, c: Number(i.c) || 0,
+                    na: Number(i.na) || 0, k: Number(i.k) || 0, tempId: Date.now() + idx, checked: true, multiplier: 1
                 }));
-                
-                renderAiList();
-                document.getElementById('aiResultsContainer').classList.remove('hidden');
-            } catch(e) { 
-                console.error("AI 辨識錯誤:", e);
-                showToast('辨識失敗，請確保圖片清晰或嘗試加上補充說明'); 
-            }
-            document.getElementById('aiLoadingBox').classList.add('hidden');
+                renderAiList(); document.getElementById('aiResultsContainer').classList.remove('hidden');
+            } catch(e) {
+                console.error("AI 辨識解析錯誤：", e);
+                // 把真正的錯誤原因印出來，不再只顯示籠統的錯誤
+                document.getElementById('aiErrorMessage').textContent = "辨識失敗：" + (e.message || "請確保圖片清晰");
+                document.getElementById('aiErrorBox').classList.remove('hidden');
+            } finally { document.getElementById('aiLoadingBox').classList.add('hidden'); }
+        }
+
+        async function callGeminiModelsWithFallback(payload) {
+            const key = userGeminiApiKey || localStorage.getItem('tw_macro_gemini_api_key');
+            if (!key) throw new Error('請先點擊上方「設定 API 金鑰」按鈕，輸入您的 Gemini 金鑰！');
+
+            const models = ['gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-1.5-pro-latest', 'gemini-1.5-pro'];
+            let lastError = '未知錯誤';
+            
+            for (const m of models) {
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${key}`, {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+                    });
+                    if (res.ok) return { data: await res.json(), modelUsed: m };
+                    
+                    // 解析真正的錯誤原因
+                    const errData = await res.json();
+                    lastError = errData.error?.message || `HTTP ${res.status}`;
+                    console.error(`[${m} 錯誤]:`, lastError);
+                } catch (e) {
+                    lastError = e.message;
+                }
+            } 
+            throw new Error(`API 連線失敗 (${lastError})`);
         }
 
         function renderAiList() {
-            const container = document.getElementById('aiDetectedList');
-            container.innerHTML = aiDetectedItems.map((i, idx) => `
+            document.getElementById('aiDetectedList').innerHTML = aiDetectedItems.map((i, idx) => `
                 <div class="p-2 border rounded-lg bg-slate-50 flex justify-between items-center text-xs">
                     <div><input type="checkbox" checked onchange="aiDetectedItems[${idx}].checked=this.checked"> ${i.name} (${i.portion})</div>
                     <div class="font-bold text-emerald-600">${i.kcal} kcal</div>
@@ -1223,14 +697,12 @@
         function commitAiItemsToLog() {
             const type = document.getElementById('mealType').value;
             aiDetectedItems.filter(i=>i.checked).forEach(i => {
-                mealLogs.push({id:Date.now()+Math.random(), mealType:type, name:i.name, portion:i.portion, kcal:i.kcal, p:i.p, f:i.f, c:i.c, na:i.na||0, k:i.k||0, photoDataUrl:currentPhotoDataUrl});
+                mealLogs.push({id:Date.now()+Math.random(), mealType:type, name:i.name, portion:i.portion, kcal:i.kcal, p:i.p, f:i.f, c:i.c, na:i.na||0, k:i.k||0});
             });
             saveStateToStorage(); renderAll(); clearUploadedPhoto();
-            document.getElementById('aiResultsContainer').classList.add('hidden');
-            showToast('已加入紀錄');
+            document.getElementById('aiResultsContainer').classList.add('hidden'); showToast('已加入紀錄');
         }
 
-        // 手動輸入
         function populatePresetDropdown() {
             const s = document.getElementById('presetSelect');
             FOOD_PRESETS.forEach(item => { s.add(new Option(`${item.name} (${item.kcal}kcal)`, item.id)); });
@@ -1238,49 +710,137 @@
         function handlePresetChange() {
             const id = document.getElementById('presetSelect').value;
             const item = FOOD_PRESETS.find(i => i.id === id);
-            if(item){ activePresetItem=item; document.getElementById('multiplierBox').classList.remove('hidden'); fillForm(item, 1); }
+            if(item){ document.getElementById('multiplierBox').classList.remove('hidden'); fillForm(item, 1); }
         }
-        function applyMultiplier(m) { if(activePresetItem) fillForm(activePresetItem, m); }
+        function applyMultiplier(m) {
+            const id = document.getElementById('presetSelect').value;
+            const item = FOOD_PRESETS.find(i => i.id === id); if(item) fillForm(item, m);
+        }
         function fillForm(i, m) {
             document.getElementById('foodName').value = i.name; document.getElementById('foodPortion').value = i.portion + (m!=1?` x${m}`:'');
             ['kcal','p','f','c','na','k'].forEach(k => document.getElementById('food'+k.toUpperCase()).value = round1(i[k]*m));
-            updateLiveFormPFC();
-        }
-        function updateLiveFormPFC() {
-            const p=Number(document.getElementById('foodP').value)||0, f=Number(document.getElementById('foodF').value)||0, c=Number(document.getElementById('foodC').value)||0;
-            const t = p*4+f*9+c*4;
-            document.getElementById('liveFormPFCPreview').textContent = t>0 ? `P:${Math.round(p*4/t*100)}% F:${Math.round(f*9/t*100)}% C:${Math.round(c*4/t*100)}%` : 'P:0% F:0% C:0%';
-        }
-        function autoCalcKcalFromPFC() {
-            const p=Number(document.getElementById('foodP').value)||0, f=Number(document.getElementById('foodF').value)||0, c=Number(document.getElementById('foodC').value)||0;
-            document.getElementById('foodKcal').value = round1(p*4+f*9+c*4);
         }
         function handleAddMeal(e) {
             e.preventDefault();
             mealLogs.push({id:Date.now(), mealType:document.getElementById('mealType').value, name:document.getElementById('foodName').value, portion:document.getElementById('foodPortion').value,
-            kcal:Number(document.getElementById('foodKcal').value), p:Number(document.getElementById('foodP').value), f:Number(document.getElementById('foodF').value), c:Number(document.getElementById('foodC').value), na:Number(document.getElementById('foodNa').value), k:Number(document.getElementById('foodK').value), photoDataUrl:currentPhotoDataUrl});
-            saveStateToStorage(); renderAll(); resetMealForm(); clearUploadedPhoto(); showToast('新增成功');
+            kcal:Number(document.getElementById('foodKcal').value), p:Number(document.getElementById('foodP').value), f:Number(document.getElementById('foodF').value), c:Number(document.getElementById('foodC').value), na:Number(document.getElementById('foodNa').value), k:Number(document.getElementById('foodK').value)});
+            saveStateToStorage(); renderAll(); resetMealForm(); showToast('新增成功');
         }
         function resetMealForm() { document.getElementById('mealForm').reset(); document.getElementById('multiplierBox').classList.add('hidden'); }
         function deleteMeal(id) { mealLogs = mealLogs.filter(m=>m.id!==id); saveStateToStorage(); renderAll(); }
-
-        // 其他功能
         function adjustWater(v) { currentWaterMl = Math.max(0, currentWaterMl+v); saveStateToStorage(); renderWaterTracker(); }
         function resetWater() { currentWaterMl=0; saveStateToStorage(); renderWaterTracker(); }
+
+        function calculateTotalBurnKcal() {
+            const resting = Number(burnState.restingKcal) || 0; const activeBase = Number(burnState.activeBaseKcal) || 0;
+            return { resting, activeBase, totalTdee: Math.round(resting + activeBase) };
+        }
+        function handleAwEnergyChange() {
+            burnState.restingKcal = Math.max(0, Math.round(Number(document.getElementById('awRestingInput').value)));
+            burnState.activeBaseKcal = Math.max(0, Math.round(Number(document.getElementById('awActiveBaseInput').value)));
+            saveStateToStorage(); renderAll();
+        }
+
+        window.exportAndReset = function() {
+            if (mealLogs.length === 0 && currentWaterMl === 0) { showToast('無資料可結算'); return; }
+            const dateStr = new Date().toLocaleDateString('zh-TW').replace(/\//g, '-');
+            const burn = calculateTotalBurnKcal();
+            let sums = { '早餐':0, '午餐':0, '晚餐':0, '點心':0, p:0, f:0, c:0, na:0, k:0, kcal:0 };
+            mealLogs.forEach(m => { sums[m.mealType] = (sums[m.mealType]||0) + m.kcal; sums.p+=m.p; sums.f+=m.f; sums.c+=m.c; sums.na+=m.na; sums.k+=m.k; sums.kcal+=m.kcal; });
+
+            const headers = ["日期", "總消耗TDEE", "基礎代謝BMR", "活動消耗(紅圈)", "總攝取kcal", "早餐", "午餐", "晚餐", "點心", "蛋白質g", "脂肪g", "碳水g", "鈉mg", "鉀mg", "純水ml", "熱量缺口"];
+            const row = [dateStr, burn.totalTdee, burn.resting, burn.activeBase, Math.round(sums.kcal), Math.round(sums['早餐']), Math.round(sums['午餐']), Math.round(sums['晚餐']), Math.round(sums['點心']), round1(sums.p), round1(sums.f), round1(sums.c), sums.na, sums.k, currentWaterMl, burn.totalTdee - sums.kcal];
+            
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(new Blob(["\uFEFF" + headers.join(",") + "\n" + row.join(",")], { type: 'text/csv;charset=utf-8;' }));
+            link.download = `健康結算_${dateStr}.csv`; document.body.appendChild(link); link.click(); document.body.removeChild(link);
+
+            mealLogs = []; currentWaterMl = 0; saveStateToStorage(); renderAll(); showToast('✅ 報表已下載並完成今日結算！');
+        };
+
+        function renderAll() {
+            document.getElementById('awRestingInput').value = burnState.restingKcal; document.getElementById('awActiveBaseInput').value = burnState.activeBaseKcal;
+            const burn = calculateTotalBurnKcal(); const totalIntake = Math.round(mealLogs.reduce((s, m) => s + m.kcal, 0)); const deficit = burn.totalTdee - totalIntake;
+            
+            document.getElementById('cardTdeeValue').textContent = burn.totalTdee.toLocaleString();
+            document.getElementById('cardIntakeValue').textContent = totalIntake.toLocaleString();
+            document.getElementById('cardDeficitValue').textContent = deficit >= 0 ? `-${deficit}` : `+${Math.abs(deficit)}`;
+            document.getElementById('cardDeficitValue').className = deficit >= 0 ? 'text-lg sm:text-xl font-black text-emerald-400' : 'text-lg sm:text-xl font-black text-rose-400';
+            
+            document.getElementById('miniTdeeDisplay').textContent = burn.totalTdee.toLocaleString();
+            document.getElementById('miniTargetDeficitDisplay').textContent = dailyTargets.deficit || 400;
+            document.getElementById('miniDeficitDisplay').textContent = deficit >= 0 ? `-${deficit}` : `+${Math.abs(deficit)}`;
+            
+            let pct = (dailyTargets.deficit||400) > 0 ? Math.min(100, Math.max(0, Math.round((deficit/(dailyTargets.deficit||400))*100))) : 100;
+            document.getElementById('deficitProgressPct').textContent = `${pct}%`; document.getElementById('deficitProgressBar').style.width = deficit >= 0 ? `${pct}%` : '100%';
+            document.getElementById('deficitProgressBar').className = deficit >= 0 ? 'h-full bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full transition-all' : 'h-full bg-rose-500 rounded-full transition-all';
+
+            let t = mealLogs.reduce((s,m)=>{s.kcal+=m.kcal;s.p+=m.p;s.f+=m.f;s.c+=m.c;s.na+=m.na;s.k+=m.k; return s;},{kcal:0,p:0,f:0,c:0,na:0,k:0});
+            document.getElementById('totalKcalDisplay').textContent = Math.round(t.kcal); document.getElementById('targetKcalDisplay').textContent = dailyTargets.kcal;
+            document.getElementById('remainKcalDisplay').textContent = `${Math.abs(Math.round(dailyTargets.kcal - t.kcal))} kcal`;
+            document.getElementById('kcalProgressBar').style.width = `${Math.min(100, (t.kcal/dailyTargets.kcal)*100)}%`;
+            
+            ['p','f','c','na','k'].forEach(key => updateBar(key, t[key], dailyTargets[key]));
+            let macroT = t.p*4+t.f*9+t.c*4;
+            let pp=macroT>0?Math.round(t.p*4/macroT*100):0, fp=macroT>0?Math.round(t.f*9/macroT*100):0, cp=macroT>0?100-pp-fp:0;
+            document.getElementById('pfcCalculatedKcal').textContent = Math.round(macroT);
+            document.getElementById('pfcRatioP').textContent=`${pp}%`; document.getElementById('pfcRatioF').textContent=`${fp}%`; document.getElementById('pfcRatioC').textContent=`${cp}%`;
+            document.getElementById('pfcDonutChart').style.background = macroT>0 ? `conic-gradient(#3b82f6 0% ${pp}%, #f59e0b ${pp}% ${pp+fp}%, #10b981 ${pp+fp}% 100%)` : '#e2e8f0';
+            document.getElementById('naKValue').textContent = t.k>0 ? (t.na/t.k).toFixed(2) : '0.00';
+            renderWaterTracker(); renderTable();
+        }
+        
+        function updateBar(id, val, target) {
+            const capId = id.charAt(0).toUpperCase() + id.slice(1);
+            if(document.getElementById(`total${capId}Display`)) document.getElementById(`total${capId}Display`).textContent = Math.round(val);
+            if(document.getElementById(`target${capId}Display`)) document.getElementById(`target${capId}Display`).textContent = target;
+            if(document.getElementById(`${id}ProgressBar`)) document.getElementById(`${id}ProgressBar`).style.width = `${Math.min(100, val/target*100)}%`;
+            if(document.getElementById(`${id}PercentTarget`)) document.getElementById(`${id}PercentTarget`).textContent = `${Math.round(val/target*100)}%`;
+        }
+
         function renderWaterTracker() {
-            document.getElementById('currentWaterDisplay').textContent=currentWaterMl;
+            document.getElementById('currentWaterDisplay').textContent=currentWaterMl; document.getElementById('targetWaterDisplay').textContent=dailyTargets.water||2500;
             let pct = Math.min(100, Math.round(currentWaterMl/(dailyTargets.water||2500)*100));
             document.getElementById('waterPctDisplay').textContent=`${pct}%`; document.getElementById('waterProgressBar').style.width=`${pct}%`;
         }
+        function renderTable() {
+            const tb = document.getElementById('mealTableBody'); tb.innerHTML = '';
+            document.getElementById('mealCountBadge').textContent = `${mealLogs.length} 項`;
+            document.getElementById('emptyStateBox').classList.toggle('hidden', mealLogs.length>0);
+            mealLogs.forEach(m => {
+                tb.innerHTML += `<tr class="border-b border-slate-100">
+                    <td class="p-2"><span class="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">${m.mealType}</span></td>
+                    <td class="p-2 truncate max-w-[100px] sm:max-w-xs"><b>${m.name}</b><br><span class="text-[10px] text-slate-400">${m.portion}</span></td>
+                    <td class="p-2 text-right font-bold">${m.kcal}</td><td class="p-2 text-right text-blue-600">${m.p}</td><td class="p-2 text-right text-amber-600">${m.f}</td><td class="p-2 text-right text-emerald-600">${m.c}</td>
+                    <td class="p-2 text-right text-slate-500">${m.na}</td><td class="p-2 text-right text-slate-500">${m.k}</td>
+                    <td class="p-2 text-center"><button onclick="deleteMeal(${m.id})" class="text-rose-500">✕</button></td></tr>`;
+            });
+        }
+
+        function switchInputMode(m) {
+            document.getElementById('panelPhotoAI').classList.toggle('hidden', m !== 'photo'); document.getElementById('panelManualEntry').classList.toggle('hidden', m !== 'manual');
+        }
+        function handlePhotoFileSelect(e) {
+            const file = e.target?.files?.[0]; if (!file) return;
+            const r = new FileReader(); r.onload = evt => {
+                const img = new Image(); img.onload = () => {
+                    const cvs = document.createElement('canvas'); let w = img.width, h = img.height;
+                    if(w>800||h>800){ if(w>h){h*=800/w;w=800;}else{w*=800/h;h=800;} }
+                    cvs.width=w; cvs.height=h; cvs.getContext('2d').drawImage(img,0,0,w,h);
+                    currentPhotoBase64 = cvs.toDataURL('image/jpeg', 0.8).split(',')[1];
+                    document.getElementById('uploadedPhotoPreview').src = cvs.toDataURL('image/jpeg', 0.8);
+                    document.getElementById('photoUploadPrompt').classList.add('hidden'); document.getElementById('photoPreviewContainer').classList.remove('hidden');
+                }; img.src = evt.target.result;
+            }; r.readAsDataURL(file);
+        }
+        function clearUploadedPhoto() { currentPhotoBase64 = null; document.getElementById('mealPhotoInput').value = ''; document.getElementById('photoPreviewContainer').classList.add('hidden'); document.getElementById('photoUploadPrompt').classList.remove('hidden'); }
 
         function loadStateFromStorage() {
             const savedKey = localStorage.getItem('tw_macro_gemini_api_key'); if(savedKey) userGeminiApiKey=savedKey;
             window.activeSyncPasscode = localStorage.getItem('tw_macro_sync_passcode')||'';
-            const targets = localStorage.getItem('tw_macro_targets_v1'), meals = localStorage.getItem('tw_macro_meals_v1'), burn = localStorage.getItem('tw_macro_burn_v1'), w = localStorage.getItem('tw_macro_water_v1');
-            if(targets) dailyTargets = {...dailyTargets, ...JSON.parse(targets)};
-            if(meals) mealLogs = JSON.parse(meals);
-            if(burn) burnState = {...burnState, ...JSON.parse(burn)};
-            if(w!==null) currentWaterMl = parseInt(w)||0;
+            const t = localStorage.getItem('tw_macro_targets_v1'), m = localStorage.getItem('tw_macro_meals_v1'), b = localStorage.getItem('tw_macro_burn_v1'), w = localStorage.getItem('tw_macro_water_v1');
+            if(t) dailyTargets = {...dailyTargets, ...JSON.parse(t)}; if(m) mealLogs = JSON.parse(m);
+            if(b) burnState = {...burnState, ...JSON.parse(b)}; if(w!==null) currentWaterMl = parseInt(w)||0;
         }
         function saveStateToStorage(skip=false) {
             localStorage.setItem('tw_macro_targets_v1', JSON.stringify(dailyTargets)); localStorage.setItem('tw_macro_meals_v1', JSON.stringify(mealLogs));
@@ -1288,89 +848,22 @@
             if(!skip && typeof window.triggerCloudPush === 'function') window.triggerCloudPush();
         }
 
-        function renderAll() { renderDashboard(); renderBurnSection(); renderWaterTracker(); renderTable(); }
-        function renderDashboard() {
-            let t = mealLogs.reduce((s,m)=>{s.kcal+=m.kcal;s.p+=m.p;s.f+=m.f;s.c+=m.c;s.na+=m.na;s.k+=m.k; return s;},{kcal:0,p:0,f:0,c:0,na:0,k:0});
-            document.getElementById('totalKcalDisplay').textContent = Math.round(t.kcal); document.getElementById('targetKcalDisplay').textContent = dailyTargets.kcal;
-            let diff = dailyTargets.kcal - t.kcal;
-            document.getElementById('remainKcalDisplay').textContent = `${Math.abs(Math.round(diff))} kcal`;
-            document.getElementById('kcalProgressBar').style.width = `${Math.min(100, (t.kcal/dailyTargets.kcal)*100)}%`;
-            
-            updateBar('p', t.p, dailyTargets.p); updateBar('f', t.f, dailyTargets.f); updateBar('c', t.c, dailyTargets.c);
-            updateBar('na', t.na, dailyTargets.na); updateBar('k', t.k, dailyTargets.k);
-
-            let macroT = t.p*4+t.f*9+t.c*4;
-            let pp=macroT>0?Math.round(t.p*4/macroT*100):0, fp=macroT>0?Math.round(t.f*9/macroT*100):0, cp=macroT>0?100-pp-fp:0;
-            document.getElementById('pfcCalculatedKcal').textContent = Math.round(macroT);
-            document.getElementById('pfcRatioP').textContent=`${pp}%`; document.getElementById('pfcRatioF').textContent=`${fp}%`; document.getElementById('pfcRatioC').textContent=`${cp}%`;
-            document.getElementById('pfcDonutChart').style.background = macroT>0 ? `conic-gradient(#3b82f6 0% ${pp}%, #f59e0b ${pp}% ${pp+fp}%, #10b981 ${pp+fp}% 100%)` : '#e2e8f0';
-            
-            document.getElementById('naKValue').textContent = t.k>0 ? (t.na/t.k).toFixed(2) : (t.na>0?'∞':'0.00');
-        }
-        
-        function updateBar(id, val, target) {
-            // 將 id 的首字母大寫 (例如: p -> P, na -> Na)
-            const capId = id.charAt(0).toUpperCase() + id.slice(1);
-            
-            const totalEl = document.getElementById(`total${capId}Display`);
-            if (totalEl) totalEl.textContent = Math.round(val);
-            
-            const targetEl = document.getElementById(`target${capId}Display`);
-            if (targetEl) targetEl.textContent = target;
-            
-            const progressEl = document.getElementById(`${id}ProgressBar`);
-            if (progressEl) progressEl.style.width = `${Math.min(100, val/target*100)}%`;
-            
-            const pctEl = document.getElementById(`${id}PercentTarget`);
-            if (pctEl) pctEl.textContent = `${Math.round(val/target*100)}%`;
-        }
-        
-        function setMealFilter(f) { currentMealFilter = f; renderTable(); }
-        function renderTable() {
-            const tb = document.getElementById('mealTableBody'); tb.innerHTML = '';
-            const list = currentMealFilter==='全部' ? mealLogs : mealLogs.filter(m=>m.mealType===currentMealFilter);
-            document.getElementById('mealCountBadge').textContent = `${list.length} 項`;
-            document.getElementById('emptyStateBox').classList.toggle('hidden', list.length>0);
-            
-            list.forEach(m => {
-                let macroT = m.p*4+m.f*9+m.c*4;
-                let pp=macroT>0?Math.round(m.p*4/macroT*100):0, fp=macroT>0?Math.round(m.f*9/macroT*100):0, cp=macroT>0?100-pp-fp:0;
-                tb.innerHTML += `<tr class="border-b border-slate-100">
-                    <td class="p-2"><span class="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">${m.mealType}</span></td>
-                    <td class="p-2">${m.photoDataUrl?`<img src="${m.photoDataUrl}" class="w-8 h-8 rounded" onclick="openPhotoInspectModal(${m.id})">`:'-'}</td>
-                    <td class="p-2 truncate max-w-[100px] sm:max-w-xs"><b>${m.name}</b><br><span class="text-[10px] text-slate-400">${m.portion}</span></td>
-                    <td class="p-2 text-right font-bold">${m.kcal}</td><td class="p-2 text-right text-blue-600">${m.p}</td><td class="p-2 text-right text-amber-600">${m.f}</td><td class="p-2 text-right text-emerald-600">${m.c}</td>
-                    <td class="p-2 text-right text-slate-500">${m.na}</td><td class="p-2 text-right text-slate-500">${m.k}</td>
-                    <td class="p-2 text-[10px] text-center">${pp}/${fp}/${cp}</td>
-                    <td class="p-2 text-center"><button onclick="deleteMeal(${m.id})" class="text-rose-500">✕</button></td>
-                </tr>`;
-            });
-        }
-
-        // Modal 相關
         function openTargetModal() { document.getElementById('targetModal').classList.remove('hidden'); }
         function closeTargetModal() { document.getElementById('targetModal').classList.add('hidden'); }
         function saveTargets(e) {
             e.preventDefault(); ['Kcal','P','F','C','Na','K','Water','Deficit'].forEach(k => {
-                let val = Number(document.getElementById('inputTarget'+k).value);
-                if(val) dailyTargets[k.toLowerCase()] = val;
-            });
-            saveStateToStorage(); renderAll(); closeTargetModal(); showToast('目標已更新');
+                let val = Number(document.getElementById('inputTarget'+k).value); if(val) dailyTargets[k.toLowerCase()] = val;
+            }); saveStateToStorage(); renderAll(); closeTargetModal(); showToast('目標已更新');
         }
         function openCloudSyncModal() { document.getElementById('cloudSyncModal').classList.remove('hidden'); }
         function closeCloudSyncModal() { document.getElementById('cloudSyncModal').classList.add('hidden'); }
         function openApiKeyModal() { document.getElementById('apiKeyModal').classList.remove('hidden'); }
         function closeApiKeyModal() { document.getElementById('apiKeyModal').classList.add('hidden'); }
         function saveGeminiApiKey() { userGeminiApiKey = document.getElementById('geminiApiKeyInput').value; localStorage.setItem('tw_macro_gemini_api_key', userGeminiApiKey); closeApiKeyModal(); showToast('金鑰已儲存'); }
-        function openIosShortcutModal() { document.getElementById('iosShortcutModal').classList.remove('hidden'); }
-        function closeIosShortcutModal() { document.getElementById('iosShortcutModal').classList.add('hidden'); }
-        function openPhotoInspectModal(id) { const m = mealLogs.find(x=>x.id===id); if(m) { document.getElementById('inspectModalImage').src=m.photoDataUrl; document.getElementById('photoInspectModal').classList.remove('hidden'); } }
-        function closePhotoInspectModal() { document.getElementById('photoInspectModal').classList.add('hidden'); }
 
         function round1(num) { return Math.round((num + Number.EPSILON) * 10) / 10; }
         let toastT; function showToast(msg) {
-            document.getElementById('toastMessage').textContent=msg;
-            document.getElementById('toastBox').classList.remove('translate-y-20','opacity-0');
+            document.getElementById('toastMessage').textContent=msg; document.getElementById('toastBox').classList.remove('translate-y-20','opacity-0');
             clearTimeout(toastT); toastT=setTimeout(()=>document.getElementById('toastBox').classList.add('translate-y-20','opacity-0'),2000);
         }
     </script>

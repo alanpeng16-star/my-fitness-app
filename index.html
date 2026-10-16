@@ -666,7 +666,8 @@
             const key = userGeminiApiKey || localStorage.getItem('tw_macro_gemini_api_key');
             if (!key) throw new Error('請先點擊上方「設定 API 金鑰」按鈕，輸入您的 Gemini 金鑰！');
 
-            const models = ['gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-1.5-pro-latest', 'gemini-1.5-pro'];
+            // 這裡更新為 Google 最新的 gemini-3-flash-preview 模型
+            const models = ['gemini-3-flash-preview', 'gemini-1.5-flash-latest'];
             let lastError = '未知錯誤';
             
             for (const m of models) {

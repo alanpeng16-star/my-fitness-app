@@ -1133,7 +1133,6 @@
             showToast('✅ 報表已下載並完成今日結算！');
         };
 
-        // --- 以下為既有介面邏輯 (略縮處理以符合版面，功能完全保留) ---
         function switchInputMode(m) {
             document.getElementById('panelPhotoAI').classList.toggle('hidden', m !== 'photo');
             document.getElementById('panelManualEntry').classList.toggle('hidden', m !== 'manual');
@@ -1163,22 +1162,56 @@
             document.getElementById('photoPreviewContainer').classList.add('hidden');
             document.getElementById('photoUploadPrompt').classList.remove('hidden');
         }
+        
         async function analyzePhotoWithGemini() {
             if(!currentPhotoBase64){ showToast('請先上傳相片'); return;}
             document.getElementById('aiLoadingBox').classList.remove('hidden');
+            
+            // 抓取使用者的補充說明
+            const userNote = document.getElementById('photoUserNote').value.trim();
+            const noteText = userNote ? `使用者補充說明：「${userNote}」。請將此說明納入計算考量（例如計算整包或一半的份量）。\n` : '';
+            
+            // 強化 Prompt：針對營養標示表與回傳格式做嚴格規範
+            const prompt = noteText + `請分析這張相片。如果是食物實體，請估算其熱量與營養素；如果是「營養標示表」，請準確讀取上方的數值，並根據標示的「每份」或「每100公克」以及總份量來計算總和。
+            請務必只回傳純 JSON 陣列格式，絕對不要包含任何其他引言或文字說明。欄位若無資料請填 0。格式範例：
+            [{"name":"食物名稱","portion":"份量(如1整包或300g)","kcal":100,"p":10,"f":5,"c":2,"na":100,"k":50}]`;
+
             try {
                 const { data } = await callGeminiModelsWithFallback({
-                    contents: [{role: "user", parts: [{text: `請分析相片中的食物份量與營養，回傳JSON陣列：[{"name":"名稱","portion":"份量","kcal":100,"p":10,"f":5,"c":2,"na":100,"k":50}]`},{inlineData:{mimeType:"image/jpeg",data:currentPhotoBase64}}]}]
+                    contents: [{role: "user", parts: [{text: prompt},{inlineData:{mimeType:"image/jpeg",data:currentPhotoBase64}}]}]
                 });
+                
                 let txt = data.candidates[0].content.parts[0].text;
-                let parsed = JSON.parse(txt.replace(/```(?:json)?/gi, '').trim());
+                // 清理 Markdown 標記，確保能被 JSON.parse 解析
+                let jsonStr = txt.replace(/```(?:json)?/gi, '').trim();
+                let parsed = JSON.parse(jsonStr);
+                
                 if(!Array.isArray(parsed)) parsed = parsed.items || [parsed];
-                aiDetectedItems = parsed.map(i => ({...i, tempId: Date.now(), checked: true, multiplier: 1}));
+                
+                // 確保數值格式正確，避免出現 NaN
+                aiDetectedItems = parsed.map(i => ({
+                    name: i.name || '未知食物',
+                    portion: i.portion || '1份',
+                    kcal: Number(i.kcal) || 0,
+                    p: Number(i.p) || 0,
+                    f: Number(i.f) || 0,
+                    c: Number(i.c) || 0,
+                    na: Number(i.na) || 0,
+                    k: Number(i.k) || 0,
+                    tempId: Date.now() + Math.random(), 
+                    checked: true, 
+                    multiplier: 1
+                }));
+                
                 renderAiList();
                 document.getElementById('aiResultsContainer').classList.remove('hidden');
-            } catch(e) { showToast('辨識失敗'); }
+            } catch(e) { 
+                console.error("AI 辨識錯誤:", e);
+                showToast('辨識失敗，請確保圖片清晰或嘗試加上補充說明'); 
+            }
             document.getElementById('aiLoadingBox').classList.add('hidden');
         }
+
         function renderAiList() {
             const container = document.getElementById('aiDetectedList');
             container.innerHTML = aiDetectedItems.map((i, idx) => `
